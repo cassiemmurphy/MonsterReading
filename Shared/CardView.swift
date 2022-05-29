@@ -10,7 +10,7 @@ import SwiftUI
 struct CardView: View {
    let card: Card
    
-//   @State private var isShowingAnswer = false
+   @State private var isShowingAnswer = false
    
     var body: some View {
        ZStack {
@@ -22,15 +22,19 @@ struct CardView: View {
              Text(card.prompt)
                 .font(.largeTitle)
                 .foregroundColor(.black)
-             
-             Text(card.answer)
-                .font(.title)
-                .foregroundColor(.gray)
+             if isShowingAnswer {
+                Text(card.answer)
+                   .font(.title)
+                   .foregroundColor(.gray)
+             }
           }
           .padding()
           .multilineTextAlignment(.center)
        }
        .frame(width: 450, height: 250)
+       .onTapGesture {
+          isShowingAnswer.toggle()
+       }
     }
 }
 

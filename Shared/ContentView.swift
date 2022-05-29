@@ -9,11 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-       Text("Start Reading")
-          .onTapGesture() {
-             print("Show Card")
-          }
-       
+       CardView(card: Card.example)
     }
 }
 
