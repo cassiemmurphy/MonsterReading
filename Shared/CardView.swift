@@ -16,6 +16,7 @@ struct CardView: View {
        ZStack {
           RoundedRectangle(cornerRadius: 25, style: .continuous)
              .fill(.white)
+             .shadow(radius: 10)
           
           VStack{
              Text(card.prompt)
@@ -29,6 +30,7 @@ struct CardView: View {
           .padding()
           .multilineTextAlignment(.center)
        }
+       .frame(width: 450, height: 250)
     }
 }
 
