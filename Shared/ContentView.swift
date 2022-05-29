@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-       Text("Hello, world!")
-          .onTapGesture(count: 2) {
-             print("Flip Me")
+       Text("Start Reading")
+          .onTapGesture() {
+             print("Show Card")
           }
        
     }
