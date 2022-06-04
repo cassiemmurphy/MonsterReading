@@ -21,7 +21,6 @@ struct ContentView: View {
              }
           }
        }
-       CardView(card: Card.example)
     }
 }
 
