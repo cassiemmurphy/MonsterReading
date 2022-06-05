@@ -6,12 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 
-struct Card {
-   let prompt: String
-   let answer: String
+struct Card: Hashable, Codable {
+   let word: String
+   let pronunciation: String
+//   let image = Image(systemName: "photo")
    
-   static let example = Card(prompt: "Question", answer: "Answer")
-   
-   
+   static let example = Card(word: "Question", pronunciation: "Answer")
 }

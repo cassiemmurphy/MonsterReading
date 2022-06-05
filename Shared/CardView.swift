@@ -20,11 +20,11 @@ struct CardView: View {
              .shadow(radius: 10)
           
           VStack{
-             Text(card.prompt)
+             Text(card.word)
                 .font(.largeTitle)
                 .foregroundColor(.black)
              if isShowingAnswer {
-                Text(card.answer)
+                Text(card.pronunciation)
                    .font(.title)
                    .foregroundColor(.gray)
              }
