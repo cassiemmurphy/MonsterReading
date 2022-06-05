@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
+   @StateObject var viewModel = ViewModel()
+   @State var dictionaryConnection = DictionaryConnection()
    @State private var cards = [Card](repeating: Card.example, count: 10)
+  // @FetchRequest(sortDescriptors: []) var card: FetchedResults<ABC>
    
     var body: some View {
        ZStack {
@@ -19,6 +22,11 @@ struct ContentView: View {
                       .stacked(at: index, in: cards.count)
                 }
              }
+          }
+       }
+       .onAppear {
+          dictionaryConnection.getDataWith { result in
+             print(result)
           }
        }
     }
