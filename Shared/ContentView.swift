@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
-   @StateObject var viewModel = ViewModel()
-   @State var dictionaryConnection = DictionaryConnection()
+//   @StateObject var viewModel = ViewModel()
+//   @State var dictionaryConnection = DictionaryConnection()
+   @State var dataController = DataController()
    @State private var cards = [Card](repeating: Card.example, count: 10)
   // @FetchRequest(sortDescriptors: []) var card: FetchedResults<ABC>
    
@@ -25,9 +26,7 @@ struct ContentView: View {
           }
        }
        .onAppear {
-          dictionaryConnection.getDataWith { result in
-             print(result)
-          }
+          DictionaryConnection.shared.fetchVocabData(word: "flat")
        }
     }
 }
