@@ -19,7 +19,7 @@ struct CardView: View {
              .fill(.white)
              .shadow(radius: 10)
           
-          VStack{
+          VStack {
              Text(card.word)
                 .font(.largeTitle)
                 .foregroundColor(.black)
