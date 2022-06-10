@@ -1,0 +1,30 @@
+{
+  "configurations" : [
+    {
+      "id" : "E3568F7B-8104-4A2E-BCAA-46F29194A16B",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Monster Reading.xcodeproj",
+      "identifier" : "D56ACE24282D68660025EADE",
+      "name" : "Monster Reading (macOS)"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Monster Reading.xcodeproj",
+        "identifier" : "D56ACE37282D68660025EADE",
+        "name" : "Tests macOS"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "65E6C2AA-04E2-4B52-B408-01AE31752A44",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Monster Reading.xcodeproj",
+        "identifier" : "D56ACE2B282D68660025EADE",
+        "name" : "Tests iOS"
+      }
+    }
+  ],
+  "version" : 1
+}
