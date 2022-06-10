@@ -1,6 +1,5 @@
 //
 //  DataController.swift
-//  Reading Flashcards
 //
 //  Created by Murphy, Cassie on 6/4/22.
 //

@@ -1,6 +1,5 @@
 //
 //  ContentView.swift
-//  Shared
 //
 //  Created by Murphy, Cassie on 5/12/22.
 //

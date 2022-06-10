@@ -1,6 +1,5 @@
 //
 //  DictionaryConnection.swift
-//  Reading Flashcards
 //
 //  Created by Murphy, Cassie on 6/5/22.
 //
