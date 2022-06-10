@@ -39,8 +39,4 @@ class Tests_macOS: XCTestCase {
             }
         }
     }
-   
-   func testCard()  throws {
-      
-   }
 }
