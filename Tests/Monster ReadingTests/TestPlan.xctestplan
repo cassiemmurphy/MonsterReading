@@ -1,7 +1,7 @@
 {
   "configurations" : [
     {
-      "id" : "65E6C2AA-04E2-4B52-B408-01AE31752A44",
+      "id" : "A64E07B9-EA53-4C4B-9D88-68BB718500A9",
       "name" : "Configuration 1",
       "options" : {
 
@@ -9,14 +9,14 @@
     }
   ],
   "defaultOptions" : {
-
+    "testTimeoutsEnabled" : true
   },
   "testTargets" : [
     {
       "target" : {
         "containerPath" : "container:Monster Reading.xcodeproj",
-        "identifier" : "D56ACE2B282D68660025EADE",
-        "name" : "Tests iOS"
+        "identifier" : "D5D1BA782854FD7A00B9A676",
+        "name" : "Monster ReadingTests"
       }
     }
   ],

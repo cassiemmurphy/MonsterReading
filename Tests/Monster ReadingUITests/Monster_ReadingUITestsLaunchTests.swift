@@ -1,13 +1,13 @@
 //
-//  Tests_macOSLaunchTests.swift
-//  Tests macOS
+//  Monster_ReadingUITestsLaunchTests.swift
+//  Monster ReadingUITests
 //
-//  Created by Murphy, Cassie on 5/12/22.
+//  Created by Murphy, Cassie on 6/11/22.
 //
 
 import XCTest
 
-class Tests_macOSLaunchTests: XCTestCase {
+class Monster_ReadingUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

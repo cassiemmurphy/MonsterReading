@@ -71,6 +71,9 @@
             reference = "container:Tests/Tests iOS/Monster Reading (iOS).xctestplan"
             default = "YES">
          </TestPlanReference>
+         <TestPlanReference
+            reference = "container:Tests/Monster ReadingTests/TestPlan.xctestplan">
+         </TestPlanReference>
       </TestPlans>
       <Testables>
          <TestableReference
@@ -87,6 +90,26 @@
                identifier = "com.apple.dt.IDEFoundation.CurrentLocationScenarioIdentifier"
                referenceType = "1">
             </LocationScenarioReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D5D1BA782854FD7A00B9A676"
+               BuildableName = "Monster ReadingTests.xctest"
+               BlueprintName = "Monster ReadingTests"
+               ReferencedContainer = "container:Monster Reading.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D5D1BA852854FD8500B9A676"
+               BuildableName = "Monster ReadingUITests.xctest"
+               BlueprintName = "Monster ReadingUITests"
+               ReferencedContainer = "container:Monster Reading.xcodeproj">
+            </BuildableReference>
          </TestableReference>
       </Testables>
    </TestAction>

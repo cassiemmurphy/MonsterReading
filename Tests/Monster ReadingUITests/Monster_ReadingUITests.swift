@@ -1,13 +1,13 @@
 //
-//  Tests_iOS.swift
-//  Tests iOS
+//  Monster_ReadingUITests.swift
+//  Monster ReadingUITests
 //
-//  Created by Murphy, Cassie on 5/12/22.
+//  Created by Murphy, Cassie on 6/11/22.
 //
 
 import XCTest
 
-class Tests_iOS: XCTestCase {
+class Monster_ReadingUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -39,6 +39,4 @@ class Tests_iOS: XCTestCase {
             }
         }
     }
-   
-   
 }
