@@ -65,4 +65,11 @@ struct Word: Decodable {
          
       }
    }
+   
+   
+   init(word: String, definition: String) {
+      self.word = word
+      self.definition = definition
+   }
+   
 }

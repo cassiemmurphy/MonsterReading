@@ -8,16 +8,16 @@ import SwiftUI
 
 struct ContentView: View {
    @State var dataController = DataController()
-   @State private var cards = [Card](repeating: Card.example, count: 10)
+   @State private var words = [Word](repeating: Word(word: "hat", definition: "item to be worn on head"), count: 10)
   // @FetchRequest(sortDescriptors: []) var card: FetchedResults<ABC>
    
     var body: some View {
        ZStack {
           VStack {
              ZStack {
-                ForEach(0..<cards.count, id: \.self) { index in
-                   CardView(card: cards[index])
-                      .stacked(at: index, in: cards.count)
+                ForEach(0..<words.count, id: \.self) { index in
+                   CardView(word: words[index])
+                      .stacked(at: index, in: words.count)
                 }
              }
           }
