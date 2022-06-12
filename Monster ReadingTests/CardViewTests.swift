@@ -13,7 +13,7 @@ extension CardView: Inspectable {}
 
 class CardViewTests: XCTestCase {
    func testCardView() throws {
-      let cardView = CardView(word: Word(word: "word", definition: "this is the definition"))
+      let cardView = CardView(word: WordManager(word: "word", definition: "this is the definition"))
       
       XCTAssertNotNil(cardView)
       

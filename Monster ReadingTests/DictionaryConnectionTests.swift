@@ -31,7 +31,7 @@ class DictionaryConnectionTests: XCTestCase {
    
    func testWordArrayAppendsWord() {
       // given
-      let word = Word(word: UUID().uuidString, definition: UUID().uuidString)
+      let word = WordManager(word: UUID().uuidString, definition: UUID().uuidString)
       
       // when
       dictionaryConnection.words.append(word)
@@ -42,12 +42,12 @@ class DictionaryConnectionTests: XCTestCase {
    
    func testWordArrayAppendsWordsStress() {
       // given
-      var word: Word
+      var word: WordManager
       
       // when
       let loopCount = Int.random(in: 1..<100)
       for _ in 0..<loopCount {
-         word = Word(word: UUID().uuidString, definition: UUID().uuidString)
+         word = WordManager(word: UUID().uuidString, definition: UUID().uuidString)
          dictionaryConnection.words.append(word)
       }
       

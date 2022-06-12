@@ -97,7 +97,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D5D1BA782854FD7A00B9A676"
                BuildableName = "Monster ReadingTests.xctest"
-               BlueprintName = "Monster ReadingTests"
+               BlueprintName = "Monster Reading Tests"
                ReferencedContainer = "container:Monster Reading.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -108,6 +108,16 @@
                BlueprintIdentifier = "D5D1BA852854FD8500B9A676"
                BuildableName = "Monster ReadingUITests.xctest"
                BlueprintName = "Monster ReadingUITests"
+               ReferencedContainer = "container:Monster Reading.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D5D1BAA728552D6600B9A676"
+               BuildableName = "Monster Reading UI Tests.xctest"
+               BlueprintName = "Monster Reading UI Tests"
                ReferencedContainer = "container:Monster Reading.xcodeproj">
             </BuildableReference>
          </TestableReference>
