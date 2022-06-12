@@ -15,10 +15,6 @@ struct CardView: View {
    
     var body: some View {
        ZStack {
-//          RoundedRectangle(cornerRadius: 25, style: .continuous)
-////             .fill(fillColor)
-//             .shadow(radius: 10)
-//
           VStack {
              Text(word.word.uppercased())
                 .font(.system(size: 90))
@@ -29,6 +25,7 @@ struct CardView: View {
                    .font(.title)
                    .foregroundColor(.gray)
              }
+             Spacer()
              HStack {
                 Spacer()
                 Image(systemName: "mic.circle.fill")
@@ -41,13 +38,13 @@ struct CardView: View {
                 }, label: {
                    Image(systemName: "speaker.wave.2.fill")
                       .imageScale(.large)
+                      .foregroundColor(.white)
                 })
-
                 Spacer()
              }
+             Spacer()
           }
           .padding()
-          .multilineTextAlignment(.center)
        }
        .rotationEffect(.degrees(Double(offset.width / 5)))
        .offset(x: offset.width * 5, y: 0)

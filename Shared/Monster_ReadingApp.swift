@@ -12,7 +12,7 @@ struct Monster_ReadingApp: App {
    
     var body: some Scene {
         WindowGroup {
-           ContentView(coreDM: CoreDataManager())
+           ContentView()
         }
     }
 }

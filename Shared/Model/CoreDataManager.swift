@@ -11,6 +11,8 @@ import CoreData
 class CoreDataManager {
    let persistenceContainer: NSPersistentContainer
    
+   //static let shared = CoreDataManager()
+   
    init() {
       persistenceContainer = NSPersistentContainer.init(name: "Vocabulary")
       persistenceContainer.loadPersistentStores{ (description, error) in
@@ -31,6 +33,15 @@ class CoreDataManager {
       }
    }
    
+   func updateWord() {
+      do {
+         try persistenceContainer.viewContext.save()
+      } catch {
+         persistenceContainer.viewContext.rollback()
+         print("Failed to update word \(error)")
+      }
+   }
+   
    func removeWord(word: Word) {
       persistenceContainer.viewContext.delete(word)
       
@@ -38,7 +49,7 @@ class CoreDataManager {
          try persistenceContainer.viewContext.save()
       } catch {
          persistenceContainer.viewContext.rollback()
-         print("Failed to save context \(error)")
+         print("Failed to remove word \(error)")
       }
    }
    
