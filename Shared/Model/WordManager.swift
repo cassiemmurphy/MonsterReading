@@ -7,7 +7,7 @@
 import Foundation
 import SwiftUI
 
-struct Word: Decodable {
+struct WordManager: Decodable {
    let word, definition: String
    var pronunciation, phoneticSpelling: String?
    var image: Image?

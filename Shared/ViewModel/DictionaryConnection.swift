@@ -8,7 +8,7 @@ import Foundation
 
 class DictionaryConnection: ObservableObject {
    //FIXME: Need to populate array OR add words to Core Data when called upon
-   @Published var words = [Word]()
+   @Published var words = [WordManager]()
    
    /// Shared instance. FIXME: Do I need this??
    public static let shared = DictionaryConnection()
@@ -40,7 +40,7 @@ class DictionaryConnection: ObservableObject {
          guard let data = data, error == nil else { return }
          
          do {
-            let word = try JSONDecoder().decode(Word.self, from: data)
+            let word = try JSONDecoder().decode(WordManager.self, from: data)
             DispatchQueue.main.async {
                self?.words.append(word)
             }

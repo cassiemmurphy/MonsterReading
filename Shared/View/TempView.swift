@@ -15,9 +15,9 @@ struct TempView: View {
                 .fill(Color("MonsterLime"))
                 .ignoresSafeArea()
                 .overlay(alignment: .bottom, content: {
-                   Card1()
+                   CardView(word: WordManager(word: "hat", definition: "Item worn on head"))
                       .background(Color("MonsterBase"))
-                      .clipShape(RoundedRectangle(cornerRadius: 45))
+                      .clipShape(RoundedRectangle(cornerRadius: 45, style: .continuous))
                       .frame(height: geometry.size.height * 0.4)
                       .offset(x: 0, y: 35)
                 })
@@ -33,24 +33,4 @@ struct TempView_Previews: PreviewProvider {
              .previewInterfaceOrientation(.portrait)
        }
     }
-}
-
-struct Card1: View {
-   var body: some View {
-      VStack {
-         Text("WORD").font(.system(size: 72))
-         Spacer()
-         HStack {
-            Spacer()
-            Image(systemName: "mic.circle.fill")
-               .imageScale(.large)
-            Spacer()
-            Image(systemName: "speaker.wave.2.fill")
-               .imageScale(.large)
-            Spacer()
-         }
-         Spacer()
-      }.padding()
-   }
-   
 }

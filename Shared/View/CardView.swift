@@ -5,10 +5,9 @@
 //
 
 import SwiftUI
-import AVKit
 
 struct CardView: View {
-   var word: Word
+   var word: WordManager
    
    @State private var showDefinition = false
    @State private var offset = CGSize.zero
@@ -16,13 +15,13 @@ struct CardView: View {
    
     var body: some View {
        ZStack {
-          RoundedRectangle(cornerRadius: 25, style: .continuous)
-             .fill(Color("MonsterBase"))
-             .shadow(radius: 10)
-          
+//          RoundedRectangle(cornerRadius: 25, style: .continuous)
+////             .fill(fillColor)
+//             .shadow(radius: 10)
+//
           VStack {
              Text(word.word.uppercased())
-                .font(.largeTitle)
+                .font(.system(size: 90))
                 .fontWeight(.heavy)
                 .foregroundColor(.black)
              if showDefinition {
@@ -34,6 +33,7 @@ struct CardView: View {
                 Spacer()
                 Image(systemName: "mic.circle.fill")
                    .imageScale(.large)
+                   .foregroundColor(.white)
                 Spacer()
                 Button(action: {
                    soundManager.playSound(sound: "https://audio.oxforddictionaries.com/en/mp3/hat__us_2.mp3")
@@ -49,7 +49,6 @@ struct CardView: View {
           .padding()
           .multilineTextAlignment(.center)
        }
-       .frame(width: 450, height: 250)
        .rotationEffect(.degrees(Double(offset.width / 5)))
        .offset(x: offset.width * 5, y: 0)
        .opacity(2 - Double(abs(offset.width / 50)))
@@ -75,16 +74,8 @@ struct CardView: View {
 
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
-       CardView(word: Word(word: "hat", definition: "Item worn on head"))
+       CardView(word: WordManager(word: "hat", definition: "Item worn on head"))
     }
 }
 
-class SoundManager : ObservableObject {
-    var audioPlayer: AVPlayer?
 
-    func playSound(sound: String){
-        if let url = URL(string: sound) {
-            self.audioPlayer = AVPlayer(url: url)
-        }
-    }
-}
