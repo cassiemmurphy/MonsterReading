@@ -13,29 +13,29 @@ struct FlashCardsView: View {
    
     var body: some View {
        GeometryReader { geometry in
-          ZStack {
-             Rectangle()
-                .fill(Color("MonsterLime"))
-                
+          VStack {
+             Image("LimeMelt")
+                .resizable()
+                .scaledToFit()
                 .ignoresSafeArea()
-             
-             // FIXME: This is only available macOS 12 or newer. Either use zstack instead or update base os.
-                .overlay(alignment: .bottom, content: {
-                   CardView(word: WordManager(word: "hat", definition: "Item worn on head"))
-                      .background(Color("MonsterBase"))
-                      .clipShape(RoundedRectangle(cornerRadius: 45, style: .continuous))
-                      .frame(height: geometry.size.height * 0.4)
-                      .offset(x: 0, y: geometry.size.height * 0.05)
-                   // FIXME: Issues with landscape iphone view. Keep portrait or make offset changes based on orientaion.
-                })
-          }
+             CardView(word: WordManager(word: "hat", definition: "Item worn on head"))
+                .background(Color("MonsterBase"))
+                .clipShape(RoundedRectangle(cornerRadius: 45, style: .continuous))
+                .frame(height: geometry.size.height * 0.4)
+                .offset(x: 0, y: geometry.size.height * 0.05)
+          }.background(Color("MonsterLime"))
        }
     }
 }
 
+// FIXME: Issues with landscape iphone view. Keep portrait or make offset changes based on orientaion.
+
+
+
 struct FlashCardView_Previews: PreviewProvider {
     static var previews: some View {
-        FlashCardsView()
+       FlashCardsView()
+.previewInterfaceOrientation(.portraitUpsideDown)
     }
 }
 

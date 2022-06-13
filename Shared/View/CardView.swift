@@ -28,17 +28,13 @@ struct CardView: View {
              Spacer()
              HStack {
                 Spacer()
-                Image(systemName: "mic.circle.fill")
-                   .imageScale(.large)
-                   .foregroundColor(.white)
+                Image("Talk")
                 Spacer()
                 Button(action: {
                    soundManager.playSound(sound: "https://audio.oxforddictionaries.com/en/mp3/hat__us_2.mp3")
                    soundManager.audioPlayer?.play()
                 }, label: {
-                   Image(systemName: "speaker.wave.2.fill")
-                      .imageScale(.large)
-                      .foregroundColor(.white)
+                   Image("PlaySound")
                 })
                 Spacer()
              }
