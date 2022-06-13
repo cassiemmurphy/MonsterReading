@@ -16,7 +16,10 @@ struct FlashCardsView: View {
           ZStack {
              Rectangle()
                 .fill(Color("MonsterLime"))
+                
                 .ignoresSafeArea()
+             
+             // FIXME: This is only available macOS 12 or newer. Either use zstack instead or update base os.
                 .overlay(alignment: .bottom, content: {
                    CardView(word: WordManager(word: "hat", definition: "Item worn on head"))
                       .background(Color("MonsterBase"))

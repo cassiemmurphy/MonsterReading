@@ -56,7 +56,7 @@ struct CardView: View {
             }
             .onEnded { _ in
                if abs(offset.width) > 100 {
-                  // remove card
+                  // FIXME: Move card to the back of the list instead of remove it.
                }
                else {
                   offset = .zero
