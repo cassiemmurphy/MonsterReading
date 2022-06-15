@@ -43,16 +43,10 @@ struct WelcomeView: View {
                          .foregroundColor(.gray)
                    }.padding()
                    Spacer()
-                   HStack {
-                  // FIXME: Random image for now in place of navigation dots
-                      Image(systemName: "arrow.left.circle.fill")
-                         .foregroundColor(Color("MonsterBase"))
-                      Spacer()
-                      Image(systemName: "arrow.right.circle.fill")
-                         .foregroundColor(Color("MonsterBase"))
-                   }.padding()
+                   WelcomeNavigation(pageNumber: 1)
                    Spacer()
-                }  .background(.white)
+                }.padding()
+                   .background(.white)
                    .clipShape(RoundedRectangle(cornerRadius: 45, style: .continuous))
                    .frame(height: geometry.size.height * 0.4, alignment: .bottom)
                 // FIXME: Not happy with all odd spacing
@@ -64,8 +58,54 @@ struct WelcomeView: View {
     }
 }
 
+struct WelcomeNavigation: View {
+   var pageNumber: Int
+   
+   var body: some View {
+      let navShapes = NavShapes().setShapeOrder(pageArrayNumber: pageNumber - 1)
+      
+      HStack {
+     // FIXME: Random image for now in place of navigation dots
+         HStack(spacing: 20) {
+            navShapes[0]
+            navShapes[1]
+            navShapes[2]
+         }
+         Spacer()
+         Image(systemName: "arrow.right.circle.fill")
+            .resizable()
+            .frame(width: 55, height: 55)
+            .foregroundColor(Color("MonsterBase"))
+      }.padding()
+   }
+}
+
 struct WelcomeView_Previews: PreviewProvider {
     static var previews: some View {
         WelcomeView()
     }
+}
+
+private struct NavShapes {
+   let currentPage = AnyView(RoundedRectangle(cornerRadius: 50, style: .continuous)
+                              .fill(Color("MonsterBase"))
+                              .frame(width: 25, height: 10))
+   let otherPage = AnyView(Circle()
+                           .fill(Color("Gray"))
+                           .frame(width: 10, height: 10))
+   
+   
+   func setShapeOrder(pageArrayNumber: Int) -> [AnyView]{
+      var navShapes: [AnyView] = []
+      
+      for index in 0...2 {
+         if index == pageArrayNumber {
+            navShapes.append(currentPage)
+         } else {
+            navShapes.append(otherPage)
+         }
+      }
+      
+      return navShapes
+   }
 }
