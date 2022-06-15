@@ -127,6 +127,7 @@
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
+<<<<<<< HEAD
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
@@ -159,5 +160,7 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+=======
+>>>>>>> a9eb6ba (Add welcome screen)
    </Breakpoints>
 </Bucket>
