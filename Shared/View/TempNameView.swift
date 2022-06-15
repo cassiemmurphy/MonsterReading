@@ -14,21 +14,21 @@ struct FlashCardsView: View {
           VStack {
              Image("LimeMelt")
                 .resizable()
-                .scaledToFit()
-                .ignoresSafeArea()
-             CardView(word: WordManager(word: "hat", definition: "Item worn on head"))
-                .background(Color("MonsterBase"))
-                .clipShape(RoundedRectangle(cornerRadius: 45, style: .continuous))
-                .frame(height: geometry.size.height * 0.4)
-                .offset(x: 0, y: geometry.size.height * 0.05)
+//                .scaledToFit()
+                .frame(width: geometry.size.width, alignment: .center)
+             CardView(word: WordManager(word: "hat",
+                                        definition: "Item worn on head"))
+                .withOverlayStyle(bgColor: Color("MonsterBase"),
+                                  height: geometry.size.height * 0.4,
+                                  offsetY: geometry.size.height * 0.01)
+                                 // FIXME: offset adjustments need checking
           }.background(Color("MonsterLime"))
+             .ignoresSafeArea()
        }
     }
 }
 
 // FIXME: Issues with landscape iphone view. Keep portrait or make offset changes based on orientaion.
-
-
 
 struct FlashCardView_Previews: PreviewProvider {
     static var previews: some View {

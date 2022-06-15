@@ -31,11 +31,16 @@ struct Login: View {
                    Text("Sign up")
                 })
              }
-             if isSignIn {
-                SignIn()
-             } else {
-                SignUp()
-             }
+             Spacer()
+             VStack {
+                Spacer()
+                if isSignIn {
+                   SignIn()
+                } else {
+                   SignUp()
+                }
+             }.frame(height: geometry.size.height * 0.5, alignment: .bottom)
+                .background(.white)
           }.frame(width: geometry.size.width, height: geometry.size.height)
              .background(bgColor)
        }
@@ -60,14 +65,14 @@ struct SignUp: View {
       
       VStack {
          Text("Enter the following details to sign up")
-         Form {
-            TextField("Full Name", text: $fullName)
-            TextField("Enter your email", text: $email)
+         TextField("Full Name", text: $fullName)
+            .textFieldStyle(.roundedBorder)
+            .foregroundColor(.black)
+         TextField("Enter your email", text: $email)
                .keyboardType(.decimalPad)
-            TextField("Enter a 6 digit login PIN", text: $pin)
-            TextField("Mobile", text: $phone)
-         }
-      }
+         TextField("Enter a 6 digit login PIN", text: $pin)
+         TextField("Mobile", text: $phone)
+      }.padding()
    }
 }
 
@@ -84,6 +89,15 @@ struct SignIn: View {
       VStack {
          Text("Enter your 6 digit PIN to sign in")
          Rectangle()
+      }
+   }
+}
+
+struct menuTop: View {
+   var body: some View {
+      HStack {
+         Image(systemName: "chevron.left")
+
       }
    }
 }
