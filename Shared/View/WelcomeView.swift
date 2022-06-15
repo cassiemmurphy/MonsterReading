@@ -7,7 +7,11 @@
 
 import SwiftUI
 
+//FIXME: Look into using tab view
+
 struct WelcomeView: View {
+   @EnvironmentObject var appState: AppState
+   
     var body: some View {
        GeometryReader { geometry in
           ZStack {
@@ -48,13 +52,17 @@ struct WelcomeView: View {
                 }.padding()
                    .background(.white)
                    .clipShape(RoundedRectangle(cornerRadius: 45, style: .continuous))
-                   .frame(height: geometry.size.height * 0.4, alignment: .bottom)
-                // FIXME: Not happy with all odd spacing
-
+                   .frame(height: geometry.size.height * 0.45, alignment: .bottom)
              }
           }.frame(height: geometry.size.height)
 
        }
+    }
+}
+
+struct WelcomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        WelcomeView()
     }
 }
 
@@ -65,25 +73,23 @@ struct WelcomeNavigation: View {
       let navShapes = NavShapes().setShapeOrder(pageArrayNumber: pageNumber - 1)
       
       HStack {
-     // FIXME: Random image for now in place of navigation dots
          HStack(spacing: 20) {
             navShapes[0]
             navShapes[1]
             navShapes[2]
          }
          Spacer()
-         Image(systemName: "arrow.right.circle.fill")
-            .resizable()
-            .frame(width: 55, height: 55)
-            .foregroundColor(Color("MonsterBase"))
+         Button(action: {
+         // Switch Views
+            print("View Switch")
+         }, label: {
+            Image(systemName: "arrow.right.circle.fill")
+               .resizable()
+               .frame(width: 55, height: 55)
+               .foregroundColor(Color("MonsterBase"))
+         })
       }.padding()
    }
-}
-
-struct WelcomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        WelcomeView()
-    }
 }
 
 private struct NavShapes {
