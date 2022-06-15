@@ -18,6 +18,7 @@ struct MonsterTitle: View {
             .foregroundColor(Color("MonsterBase"))
          Text("Reading")
             .font(Font.custom("Helvetica Neue", size: fontSize))
+            .fontWeight(.semibold)
             .foregroundColor(.white)
       }
    }
@@ -28,7 +29,7 @@ extension View {
       self.padding()
          .background(bgColor)
          .clipShape(RoundedRectangle(cornerRadius: 45, style: .continuous))
-         .frame(height: height)
+         .frame(height: height, alignment: .bottom)
          .offset(x: 0, y: offsetY)
    }
 }
@@ -54,7 +55,7 @@ struct WelcomeNavigation: View {
             Image(systemName: "arrow.right.circle.fill")
                .resizable()
                .frame(width: 55, height: 55)
-               .foregroundColor(Color("MonsterBase"))
+               .foregroundColor(accentColor)
          })
       }.padding()
    }
