@@ -15,39 +15,38 @@ struct Login: View {
     var body: some View {
        // Back, Title, Logo
        GeometryReader { geometry in
-          VStack(alignment: .leading) {
-             Spacer()
-             MenuTop()
-             HStack {
-                Button(action: {
-                   isSignIn = true
-                   bgColor = Color("MonsterLime")
-                }, label: {
-                   Text("Sign in")
-                      .focus(focused: isSignIn)
-                }).padding()
-                Button(action: {
-                   isSignIn = false
-                   bgColor = Color("MonsterRed")
-                }, label: {
-                   Text("Sign up")
-                      .focus(focused: !isSignIn)
-                })
-             }.padding(.leading)
-             Spacer()
-             VStack {
-                Spacer()
-                if isSignIn {
-                   SignIn()
-                } else {
-                   SignUp()
-                }
-             }.withOverlayStyle(bgColor: .white,
-                                height: geometry.size.height * 0.9,
-                                offsetY: geometry.size.height * 0.05)
-          }.edgesIgnoringSafeArea(.bottom)
-             .frame(width: geometry.size.width, height: geometry.size.height)
-             .background(bgColor)
+          ZStack {
+             VStack(alignment: .leading) {
+                MenuTop()
+                HStack {
+                   Button(action: {
+                      isSignIn = true
+                      bgColor = Color("MonsterLime")
+                   }, label: {
+                      Text("Sign in")
+                         .focus(focused: isSignIn)
+                   }).padding()
+                   Button(action: {
+                      isSignIn = false
+                      bgColor = Color("MonsterRed")
+                   }, label: {
+                      Text("Sign up")
+                         .focus(focused: !isSignIn)
+                   })
+                }.padding()
+                VStack {
+                   Spacer()
+                   if isSignIn {
+                      SignIn(accentColor: bgColor)
+                   } else {
+                      SignUp(accentColor: bgColor)
+                   }
+                   Spacer()
+                }.withOverlayStyle(bgColor: .white,
+                                   height: geometry.size.height * 0.82,
+                                   offsetY: .zero)
+             }
+          }.background(bgColor)
        }
     }
 }
@@ -69,6 +68,7 @@ extension Text {
 }
 
 struct SignUp: View {
+   var accentColor: Color
 // FIXME: Temp form fields, to be adjusted
    @State var fullName: String = ""
    @State var email: String = ""
@@ -91,25 +91,23 @@ struct SignUp: View {
          TextField("Mobile", text: $phone)
             .textFieldStyle(.roundedBorder)
          Spacer()
-         WelcomeNavigation(pageNumber: 2, accentColor: Color("MonsterRed"))
+         WelcomeNavigation(pageNumber: 2, accentColor: accentColor)
       }.padding()
    }
 }
 
 struct SignIn: View {
-// FIXME: Temp form fields, to be adjusted
-   @State var fullName: String = ""
-   @State var email: String = ""
-   @State var pin: String = ""
-   @State var phone: String = ""
+   var accentColor: Color
    
    var body: some View {
    // FIXME: To link back to CD or other user management
       
       VStack {
          Text("Enter your 6 digit PIN to sign in")
-         Rectangle()
-      }
+         Spacer()
+         WelcomeNavigation(pageNumber: 2, accentColor: accentColor)
+         Spacer()
+      }.padding()
    }
 }
 
