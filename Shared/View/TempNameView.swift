@@ -42,11 +42,10 @@ struct TempNameView: View {
     }
 }
 
-// FIXME: Issues with landscape iphone view. Keep portrait or make offset changes based on orientaion.
-
-
-
-struct TempNameView_Previews: PreviewProvider {
+//
+//// FIXME: Issues with landscape iphone view. Keep portrait or make offset changes based on orientaion.
+//
+struct FlashCardView_Previews: PreviewProvider {
     static var previews: some View {
        TempNameView()
     }
@@ -77,6 +76,13 @@ struct TempNameView_Previews: PreviewProvider {
         words = coreDM.getAllWords()
      }
   }
+}
+
+extension View {
+ func stacked(at position: Int, in total: Int) -> some View {
+    let offset = Double(total - position)
+    return self.offset(x: 0, y: offset * 10)
+ }
 }
  
  

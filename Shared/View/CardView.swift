@@ -29,12 +29,16 @@ struct CardView: View {
              HStack {
                 Spacer()
                 Image("Talk")
+                   .resizable()
+                   .frame(width: 100, height: 100)
                 Spacer()
                 Button(action: {
                    soundManager.playSound(sound: "https://audio.oxforddictionaries.com/en/mp3/hat__us_2.mp3")
                    soundManager.audioPlayer?.play()
                 }, label: {
                    Image("PlaySound")
+                      .resizable()
+                      .frame(width: 100, height: 100)
                 })
                 Spacer()
              }
