@@ -35,6 +35,9 @@ extension View {
 }
 
 struct WelcomeNavigation: View {
+   @EnvironmentObject var navigationVM: NavigationViewModel
+   
+   var nextPage: NavPage
    var pageNumber: Int
    var accentColor: Color
    
@@ -49,8 +52,7 @@ struct WelcomeNavigation: View {
          }
          Spacer()
          Button(action: {
-         // Switch Views
-            print("View Switch")
+            navigationVM.currentPage = nextPage
          }, label: {
             Image(systemName: "arrow.right.circle.fill")
                .resizable()
@@ -89,7 +91,8 @@ struct HelperViews_Previews: PreviewProvider {
     static var previews: some View {
        VStack {
           MonsterTitle(fontSize: 50)
-          WelcomeNavigation(pageNumber: 1, accentColor: Color("MonsterBase"))
+          WelcomeNavigation(nextPage: .login, pageNumber: 1, accentColor: Color("MonsterBase"))
+             .environmentObject(NavigationViewModel())
        }
     }
 }

@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct Login: View {
+struct LoginView: View {
+   @EnvironmentObject var navigationVM: NavigationViewModel
    @State var bgColor = Color("MonsterRed")
    @State var isSignIn = false
    
@@ -17,7 +18,7 @@ struct Login: View {
        GeometryReader { geometry in
           ZStack {
              VStack(alignment: .leading) {
-                MenuTop()
+                MenuTop(previousPage: .welcome)
                 HStack {
                    Button(action: {
                       isSignIn = true
@@ -53,7 +54,7 @@ struct Login: View {
 
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
-        Login()
+       LoginView().environmentObject(NavigationViewModel())
     }
 }
 
@@ -68,6 +69,7 @@ extension Text {
 }
 
 struct SignUp: View {
+   @EnvironmentObject var navigationVM: NavigationViewModel
    var accentColor: Color
 // FIXME: Temp form fields, to be adjusted
    @State var fullName: String = ""
@@ -91,12 +93,13 @@ struct SignUp: View {
          TextField("Mobile", text: $phone)
             .textFieldStyle(.roundedBorder)
          Spacer()
-         WelcomeNavigation(pageNumber: 2, accentColor: accentColor)
+         WelcomeNavigation(nextPage: .monsterPick, pageNumber: 2, accentColor: accentColor)
       }.padding()
    }
 }
 
 struct SignIn: View {
+   @EnvironmentObject var navigationVM: NavigationViewModel
    var accentColor: Color
    
    var body: some View {
@@ -105,17 +108,20 @@ struct SignIn: View {
       VStack {
          Text("Enter your 6 digit PIN to sign in")
          Spacer()
-         WelcomeNavigation(pageNumber: 2, accentColor: accentColor)
+         WelcomeNavigation(nextPage: .monsterPick, pageNumber: 2, accentColor: accentColor)
          Spacer()
       }.padding()
    }
 }
 
 struct MenuTop: View {
+   @EnvironmentObject var navigationVM: NavigationViewModel
+   var previousPage: NavPage
+   
    var body: some View {
       HStack {
          Button(action: {
-            print("Go back to welcome page")
+            navigationVM.currentPage = previousPage
          }, label: {
             Image(systemName: "chevron.left")
                .resizable()
