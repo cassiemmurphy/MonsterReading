@@ -7,10 +7,9 @@
 import Foundation
 import SwiftUI
 
-struct WordManager: Decodable {
+struct WordManager: Decodable, Hashable {
    let word, definition: String
    var pronunciation, phoneticSpelling: String?
-   var image: Image?
    
    private enum CodingKeys: String, CodingKey {
       case word, results
@@ -65,11 +64,4 @@ struct WordManager: Decodable {
          
       }
    }
-   
-   
-   init(word: String, definition: String) {
-      self.word = word
-      self.definition = definition
-   }
-   
 }
