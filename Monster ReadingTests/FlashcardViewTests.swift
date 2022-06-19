@@ -9,11 +9,11 @@ import XCTest
 @testable import Monster_Reading
 import ViewInspector
 
-extension CardView: Inspectable {}
+extension FlashcardView: Inspectable {}
 
-class CardViewTests: XCTestCase {
+class FlashcardViewTests: XCTestCase {
    func testCardView() throws {
-      let cardView = CardView(word: WordManager(word: "word", definition: "this is the definition"))
+      let cardView = FlashcardView(word: WordManager(word: "word", definition: "this is the definition"))
       
       XCTAssertNotNil(cardView)
       

@@ -11,9 +11,9 @@ import CoreData
 class CoreDataManager {
    let persistenceContainer: NSPersistentContainer
    
-   //static let shared = CoreDataManager()
+   static let shared = CoreDataManager()
    
-   init() {
+   private init() {
       persistenceContainer = NSPersistentContainer.init(name: "Vocabulary")
       persistenceContainer.loadPersistentStores{ (description, error) in
          if let error = error {
@@ -33,15 +33,7 @@ class CoreDataManager {
       }
    }
    
-   func updateWord() {
-      do {
-         try persistenceContainer.viewContext.save()
-      } catch {
-         persistenceContainer.viewContext.rollback()
-         print("Failed to update word \(error)")
-      }
-   }
-   
+   // FIXME: Do I need the ability to remove a word??
    func removeWord(word: Word) {
       persistenceContainer.viewContext.delete(word)
       
@@ -53,19 +45,13 @@ class CoreDataManager {
       }
    }
    
-   func saveWord(id: String, definition: String?) {
-      let word = Word(context: persistenceContainer.viewContext)
-      word.id = id
-      if let definition = definition {
-         word.definition = definition
-      }
-      word.learned = false
-      
+   func saveWord() {
       do {
          try persistenceContainer.viewContext.save()
       } catch {
          print("Failed to save \(error)")
       }
    }
+   
    
 }

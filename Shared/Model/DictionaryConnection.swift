@@ -7,12 +7,8 @@
 import Foundation
 
 class DictionaryConnection: ObservableObject {
-   //FIXME: Need to populate array OR add words to Core Data when called upon
-   @Published var words = [WordManager]()
-   
-   /// Shared instance. FIXME: Do I need this??
-   public static let shared = DictionaryConnection()
-   public typealias RequestHandler = ((_ data: [String: Any]?, _ error: Error?) -> Void)
+
+   public typealias RequestHandler = ((_ data: [WordManager: Any]?, _ error: Error?) -> Void)
    
    private let appId = "f9e70613"
    private let appKey = "3a7c21194f6b52c89b3084afbfd5ad60"
@@ -42,12 +38,22 @@ class DictionaryConnection: ObservableObject {
          do {
             let word = try JSONDecoder().decode(WordManager.self, from: data)
             DispatchQueue.main.async {
-               self?.words.append(word)
+               // save word to CoreData 
             }
          } catch {
             print(error)
          }
       }.resume()
+   }
+   
+   private func saveWord(dictionaryWord: WordManager) {
+      let manager = CoreDataManager.shared
+      let word = Word(context: manager.persistenceContainer.viewContext)
+      word.id = dictionaryWord.word
+      word.learned = false
+      word.definition = dictionaryWord.definition
+      word.pronunciation = dictionaryWord.pronunciation
+      word.phoneticSpelling = dictionaryWord.phoneticSpelling
    }
 }
    
