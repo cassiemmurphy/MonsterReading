@@ -36,10 +36,12 @@ extension View {
 
 struct WelcomeNavigation: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
+   @Binding var isEnabled: Bool
    
    var nextPage: NavPage
    var pageNumber: Int
    var accentColor: Color
+   
    
    var body: some View {
       let navShapes = NavShapes(accentColor: accentColor).setShapeOrder(pageArrayNumber: pageNumber - 1)
@@ -57,8 +59,8 @@ struct WelcomeNavigation: View {
             Image(systemName: "arrow.right.circle.fill")
                .resizable()
                .frame(width: 55, height: 55)
-               .foregroundColor(accentColor)
-         })
+               .foregroundColor(isEnabled ? accentColor : accentColor.opacity(0.5))
+         }).disabled(!isEnabled)
       }.padding()
    }
 }
@@ -91,7 +93,7 @@ struct HelperViews_Previews: PreviewProvider {
     static var previews: some View {
        VStack {
           MonsterTitle(fontSize: 50)
-          WelcomeNavigation(nextPage: .login, pageNumber: 1, accentColor: Color("MonsterBase"))
+          WelcomeNavigation(isEnabled: .constant(true), nextPage: .login, pageNumber: 1, accentColor: Color("MonsterBase"))
              .environmentObject(NavigationViewModel())
        }
     }

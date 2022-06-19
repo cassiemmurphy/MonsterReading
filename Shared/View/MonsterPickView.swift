@@ -10,6 +10,7 @@ import SwiftUI
 struct MonsterPickView: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
    private var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible())]
+   @State var monsterSelected = false
    // FIXME: update spacing
    
     var body: some View {
@@ -23,6 +24,7 @@ struct MonsterPickView: View {
                    ForEach(monsterAvitars.indices) { index in
                       Button(action: {
                          print(monsterAvitars[index].name)
+                         monsterSelected = true
                       }, label: {
                          Image(monsterAvitars[index].name)
                             .resizable()
@@ -32,7 +34,7 @@ struct MonsterPickView: View {
                       })
                    }
                 }.padding()
-                WelcomeNavigation(nextPage: .welcome, pageNumber: 3, accentColor: Color("MonsterPurple")).padding()
+                WelcomeNavigation(isEnabled: $monsterSelected, nextPage: .welcome, pageNumber: 3, accentColor: Color("MonsterPurple")).padding()
              }.padding()
                 .background(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 45, style: .continuous))
