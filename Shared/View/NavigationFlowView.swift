@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct NavigationFlowView: View {
+   @EnvironmentObject var appState: AppState
    @EnvironmentObject var navigationVM: NavigationViewModel
    
    var body: some View {

@@ -2,6 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="20G624" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Users" representedClassName="Users" syncable="YES" codeGenerationType="class">
         <attribute name="childAccount" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="monster" optional="YES" attributeType="String"/>
         <attribute name="pin" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="userName" optional="YES" attributeType="String"/>
     </entity>
@@ -14,7 +15,7 @@
         <attribute name="pronunciation" optional="YES" attributeType="String"/>
     </entity>
     <elements>
+        <element name="Users" positionX="-45" positionY="-9" width="128" height="89"/>
         <element name="Word" positionX="-45" positionY="0" width="128" height="14"/>
-        <element name="Users" positionX="-45" positionY="-9" width="128" height="74"/>
     </elements>
 </model>

@@ -22,15 +22,14 @@ struct Monster_ReadingApp: App {
 
     var body: some Scene {
         WindowGroup {
-           NavigationFlowView().environmentObject(navigationVM)
-           
-//           if appState.loggedIn {
-//              ContentView()
-//                 .environmentObject(appState)
-//           } else {
-//              WelcomeView()
-//                 .environmentObject(appState)
-//           }
+           if appState.loggedIn {
+              ContentView()
+                 .environmentObject(appState)
+           } else {
+              NavigationFlowView()
+                 .environmentObject(appState)
+                 .environmentObject(navigationVM)
+           }
         }
     }
 }

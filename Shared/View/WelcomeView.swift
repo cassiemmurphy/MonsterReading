@@ -10,7 +10,6 @@ import SwiftUI
 //FIXME: Look into using tab view
 
 struct WelcomeView: View {
-//   @EnvironmentObject var appState: AppState
    @EnvironmentObject var navigationVM: NavigationViewModel
    
     var body: some View {
