@@ -42,7 +42,7 @@ class CoreDataManagerTest: XCTestCase {
 
     override func setUpWithError() throws {
        try super.setUpWithError()
-       coreDM = CoreDataManager()
+       let coreDM = CoreDataManager.shared
     }
 
     override func tearDownWithError() throws {
@@ -56,7 +56,7 @@ class CoreDataManagerTest: XCTestCase {
       let definition = "the color of the sky"
       
       // when
-      coreDM.saveWord(id: word, definition: definition)
+     coreDM.saveWord()
       
       // then
       
