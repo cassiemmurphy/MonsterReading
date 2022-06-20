@@ -9,6 +9,8 @@ import SwiftUI
 
 struct LoginView: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
+   @EnvironmentObject var appState: AppState
+   
    @State var bgColor = Color("MonsterLime")
    @State var isSignIn = true
    @ObservedObject var loginVM = LoginViewModel()
@@ -57,7 +59,9 @@ struct LoginView: View {
 
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
-       LoginView().environmentObject(NavigationViewModel())
+       LoginView()
+          .environmentObject(NavigationViewModel())
+          .environmentObject(AppState(loggedIn: false))
     }
 }
 
@@ -118,30 +122,5 @@ struct EntryField: View {
           .overlay(RoundedRectangle(cornerRadius: 40).stroke(Color.gray, lineWidth: 1))
          Text(prompt)
       }
-   }
-}
-
-struct MenuTop: View {
-   @EnvironmentObject var navigationVM: NavigationViewModel
-   var previousPage: NavPage
-   
-   var body: some View {
-      HStack {
-         Button(action: {
-            navigationVM.currentPage = previousPage
-         }, label: {
-            Image(systemName: "chevron.left")
-               .resizable()
-               .scaledToFit()
-               .frame(height: 25)
-               .foregroundColor(.white)
-         })
-         Spacer()
-         MonsterTitle(fontSize: 30)
-         Spacer()
-         Image("FaceLogo")
-            .resizable()
-            .frame(width: 30, height: 30)
-      }.padding()
    }
 }

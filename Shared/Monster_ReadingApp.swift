@@ -23,7 +23,7 @@ struct Monster_ReadingApp: App {
     var body: some Scene {
         WindowGroup {
            if appState.loggedIn {
-              ContentView()
+              HomeView()
                  .environmentObject(appState)
            } else {
               NavigationFlowView()

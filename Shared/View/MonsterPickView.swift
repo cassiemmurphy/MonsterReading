@@ -34,7 +34,7 @@ struct MonsterPickView: View {
                       })
                    }
                 }.padding()
-                WelcomeNavigation(isEnabled: $monsterSelected, nextPage: .welcome, pageNumber: 3, accentColor: Color("MonsterPurple")).padding()
+                WelcomeNavigation(isEnabled: $monsterSelected, nextPage: .home, pageNumber: 3, accentColor: Color("MonsterPurple")).padding()
              }.padding()
                 .background(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 45, style: .continuous))

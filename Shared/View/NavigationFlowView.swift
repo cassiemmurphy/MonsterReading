@@ -19,8 +19,10 @@ struct NavigationFlowView: View {
          LoginView()
       case .monsterPick:
          MonsterPickView()
-//      case .home:
-//         print("Home view goes here")
+      case .home:
+         HomeView()
+      case .flashCards:
+         TempNameView()
       }
    }
 }

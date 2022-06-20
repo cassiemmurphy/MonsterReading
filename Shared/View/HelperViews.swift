@@ -36,6 +36,7 @@ extension View {
 
 struct WelcomeNavigation: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
+   @EnvironmentObject var appState: AppState
    @Binding var isEnabled: Bool
    
    var nextPage: NavPage
@@ -54,6 +55,9 @@ struct WelcomeNavigation: View {
          }
          Spacer()
          Button(action: {
+            if nextPage == .home {
+               appState.loggedIn = true
+            }
             navigationVM.currentPage = nextPage
          }, label: {
             Image(systemName: "arrow.right.circle.fill")
@@ -88,6 +92,37 @@ private struct NavShapes {
       return navShapes
    }
 }
+
+struct MenuTop: View {
+   @EnvironmentObject var navigationVM: NavigationViewModel
+   @EnvironmentObject var appState: AppState
+   var previousPage: NavPage = .home
+   
+   var body: some View {
+      HStack {
+         Button(action: {
+            if appState.loggedIn {
+               navigationVM.currentPage = .home
+            } else {
+               navigationVM.currentPage = previousPage
+            }
+         }, label: {
+            Image(systemName: appState.loggedIn ? "house.fill" : "chevron.left")
+               .resizable()
+               .scaledToFit()
+               .frame(height: 25)
+               .foregroundColor(.white)
+         })
+         Spacer()
+         MonsterTitle(fontSize: 30)
+         Spacer()
+         Image("FaceLogo")
+            .resizable()
+            .frame(width: 30, height: 30)
+      }.padding()
+   }
+}
+
 
 struct HelperViews_Previews: PreviewProvider {
     static var previews: some View {
