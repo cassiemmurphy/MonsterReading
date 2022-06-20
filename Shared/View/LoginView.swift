@@ -9,8 +9,9 @@ import SwiftUI
 
 struct LoginView: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
-   @State var bgColor = Color("MonsterRed")
-   @State var isSignIn = false
+   @State var bgColor = Color("MonsterLime")
+   @State var isSignIn = true
+   @ObservedObject var loginVM = LoginViewModel()
    
    
     var body: some View {
@@ -38,9 +39,11 @@ struct LoginView: View {
                 VStack {
                    Spacer()
                    if isSignIn {
-                      SignIn(accentColor: bgColor)
+                      SignInView(accentColor: bgColor, handler: { pin, success in
+                         success(loginVM.checkPIN(pin: pin))
+                      })
                    } else {
-                      SignUp(accentColor: bgColor)
+                      SignUp(loginVM: loginVM, accentColor: bgColor)
                    }
                    Spacer()
                 }.withOverlayStyle(bgColor: .white,
@@ -70,47 +73,51 @@ extension Text {
 
 struct SignUp: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
+   @StateObject var loginVM: LoginViewModel
    var accentColor: Color
-// FIXME: Temp form fields, to be adjusted
-   @State var fullName: String = ""
-   @State var email: String = ""
-   @State var pin: String = ""
-   @State var phone: String = ""
+   
    
    var body: some View {
    // FIXME: To link back to CD or other user management
-      
       VStack(alignment: .leading, spacing: 20) {
          Text("Enter the following details to sign up")
             .padding(.bottom)
-         TextField("Full Name", text: $fullName)
-            .textFieldStyle(.roundedBorder)
-         TextField("Enter your email", text: $email)
-            .textFieldStyle(.roundedBorder)
-            .keyboardType(.decimalPad)
-         TextField("Enter a 6 digit login PIN", text: $pin)
-            .textFieldStyle(.roundedBorder)
-         TextField("Mobile", text: $phone)
-            .textFieldStyle(.roundedBorder)
+         VStack {
+            EntryField(placeholder: "First Name", prompt: loginVM.firstNamePrompt, field: $loginVM.firstName)
+            EntryField(placeholder: "Last Name", prompt: loginVM.lastNamePrompt, field: $loginVM.lastName)
+            EntryField(placeholder: "Enter your email", prompt: loginVM.emailPrompt, field: $loginVM.email)
+               .keyboardType(.decimalPad)
+            EntryField(placeholder: "Enter a 6 digit numeric login PIN", prompt: loginVM.pinPrompt, isSecure: true, field: $loginVM.pin)
+               .keyboardType(.numberPad)
+            EntryField(placeholder: "Confirm 6 digit numeric login PIN", prompt: loginVM.confirmPinPrompt, isSecure: true, field: $loginVM.pinConfirm)
+               .keyboardType(.numberPad)
+         }
          Spacer()
-         WelcomeNavigation(nextPage: .monsterPick, pageNumber: 2, accentColor: accentColor)
+         WelcomeNavigation(isEnabled: $loginVM.formValid, nextPage: .monsterPick, pageNumber: 2, accentColor: accentColor)
       }.padding()
-   }
+   }   
 }
 
-struct SignIn: View {
-   @EnvironmentObject var navigationVM: NavigationViewModel
-   var accentColor: Color
+struct EntryField: View {
+   var placeholder: String
+   var prompt: String
+   var isSecure = false
+   
+   @Binding var field: String
    
    var body: some View {
-   // FIXME: To link back to CD or other user management
-      
-      VStack {
-         Text("Enter your 6 digit PIN to sign in")
-         Spacer()
-         WelcomeNavigation(nextPage: .monsterPick, pageNumber: 2, accentColor: accentColor)
-         Spacer()
-      }.padding()
+      VStack(alignment: .leading) {
+         HStack {
+            if isSecure {
+               SecureField(placeholder, text: $field)
+                  .keyboardType(.numberPad)
+            } else {
+               TextField(placeholder, text: $field)
+            }
+         }.padding(10)
+          .overlay(RoundedRectangle(cornerRadius: 40).stroke(Color.gray, lineWidth: 1))
+         Text(prompt)
+      }
    }
 }
 
