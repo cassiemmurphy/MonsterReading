@@ -18,13 +18,18 @@ class AppState: ObservableObject {
 @main
 struct Monster_ReadingApp: App {
    @ObservedObject var appState = AppState(loggedIn: false)
+   @StateObject var navigationVM = NavigationViewModel()
 
     var body: some Scene {
         WindowGroup {
-           ContentView()
-              .environmentObject(appState)
-           WelcomeView()
-              .environmentObject(appState)
+           if appState.loggedIn {
+              HomeView()
+                 .environmentObject(appState)
+           } else {
+              NavigationFlowView()
+                 .environmentObject(appState)
+                 .environmentObject(navigationVM)
+           }
         }
     }
 }

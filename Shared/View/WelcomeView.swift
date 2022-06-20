@@ -10,7 +10,7 @@ import SwiftUI
 //FIXME: Look into using tab view
 
 struct WelcomeView: View {
-   @EnvironmentObject var appState: AppState
+   @EnvironmentObject var navigationVM: NavigationViewModel
    
     var body: some View {
        GeometryReader { geometry in
@@ -39,7 +39,8 @@ struct WelcomeView: View {
                          .foregroundColor(.gray)
                    }.padding()
                    Spacer()
-                   WelcomeNavigation(pageNumber: 1, accentColor: Color("MonsterBase"))
+                   WelcomeNavigation(isEnabled: .constant(true), nextPage: .login,
+                                     pageNumber: 1, accentColor: Color("MonsterBase"))
                    Spacer()
                 }.withOverlayStyle(bgColor: .white,
                                      height: geometry.size.height * 0.45,
@@ -54,7 +55,7 @@ struct WelcomeView: View {
 
 struct WelcomeView_Previews: PreviewProvider {
     static var previews: some View {
-        WelcomeView()
+       WelcomeView().environmentObject(NavigationViewModel())
     }
 }
 

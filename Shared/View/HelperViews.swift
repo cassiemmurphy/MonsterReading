@@ -35,8 +35,14 @@ extension View {
 }
 
 struct WelcomeNavigation: View {
+   @EnvironmentObject var navigationVM: NavigationViewModel
+   @EnvironmentObject var appState: AppState
+   @Binding var isEnabled: Bool
+   
+   var nextPage: NavPage
    var pageNumber: Int
    var accentColor: Color
+   
    
    var body: some View {
       let navShapes = NavShapes(accentColor: accentColor).setShapeOrder(pageArrayNumber: pageNumber - 1)
@@ -49,14 +55,16 @@ struct WelcomeNavigation: View {
          }
          Spacer()
          Button(action: {
-         // Switch Views
-            print("View Switch")
+            if nextPage == .home {
+               appState.loggedIn = true
+            }
+            navigationVM.currentPage = nextPage
          }, label: {
             Image(systemName: "arrow.right.circle.fill")
                .resizable()
                .frame(width: 55, height: 55)
-               .foregroundColor(accentColor)
-         })
+               .foregroundColor(isEnabled ? accentColor : accentColor.opacity(0.5))
+         }).disabled(!isEnabled)
       }.padding()
    }
 }
@@ -85,11 +93,43 @@ private struct NavShapes {
    }
 }
 
+struct MenuTop: View {
+   @EnvironmentObject var navigationVM: NavigationViewModel
+   @EnvironmentObject var appState: AppState
+   var previousPage: NavPage = .home
+   
+   var body: some View {
+      HStack {
+         Button(action: {
+            if appState.loggedIn {
+               navigationVM.currentPage = .home
+            } else {
+               navigationVM.currentPage = previousPage
+            }
+         }, label: {
+            Image(systemName: appState.loggedIn ? "house.fill" : "chevron.left")
+               .resizable()
+               .scaledToFit()
+               .frame(height: 25)
+               .foregroundColor(.white)
+         })
+         Spacer()
+         MonsterTitle(fontSize: 30)
+         Spacer()
+         Image("FaceLogo")
+            .resizable()
+            .frame(width: 30, height: 30)
+      }.padding()
+   }
+}
+
+
 struct HelperViews_Previews: PreviewProvider {
     static var previews: some View {
        VStack {
           MonsterTitle(fontSize: 50)
-          WelcomeNavigation(pageNumber: 1, accentColor: Color("MonsterBase"))
+          WelcomeNavigation(isEnabled: .constant(true), nextPage: .login, pageNumber: 1, accentColor: Color("MonsterBase"))
+             .environmentObject(NavigationViewModel())
        }
     }
 }
