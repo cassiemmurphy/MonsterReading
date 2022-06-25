@@ -7,11 +7,13 @@
 import SwiftUI
 
 struct CardView: View {
-   var word: WordManager
+   var word: WordViewModel
    
+   @State var cardHeight: CGFloat
    @State private var showDefinition = false
    @State private var offset = CGSize.zero
    @StateObject private var soundManager = SoundManager()
+   
    
     var body: some View {
        ZStack {
@@ -33,7 +35,7 @@ struct CardView: View {
                    .frame(width: 100, height: 100)
                 Spacer()
                 Button(action: {
-                   soundManager.playSound(sound: "https://audio.oxforddictionaries.com/en/mp3/hat__us_2.mp3")
+                   soundManager.playSound(sound: word.pronunciation)
                    soundManager.audioPlayer?.play()
                 }, label: {
                    Image("PlaySound")
@@ -46,6 +48,9 @@ struct CardView: View {
           }
           .padding()
        }
+       .withOverlayStyle(bgColor: Color("MonsterBase"),
+                         height: cardHeight,
+                         offsetY: 30)
        .rotationEffect(.degrees(Double(offset.width / 5)))
        .offset(x: offset.width * 5, y: 0)
        .opacity(2 - Double(abs(offset.width / 50)))
@@ -66,13 +71,13 @@ struct CardView: View {
        .onTapGesture {
           showDefinition.toggle()
        }
-    }
-}
-
-struct CardView_Previews: PreviewProvider {
-    static var previews: some View {
-       CardView(word: WordManager(word: "hat", definition: "Item worn on head"))
+       .animation(.spring(), value: offset)
     }
 }
 
 
+struct CardView_Preview: PreviewProvider {
+   static var previews: some View {
+      CardView(word: FlashcardViewModel.sampleWord, cardHeight: 300)
+    }
+}

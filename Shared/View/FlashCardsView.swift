@@ -10,6 +10,7 @@ import SwiftUI
 struct FlashCardsView: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
    @EnvironmentObject var appState: AppState
+   
    @StateObject private var flashcardVM = FlashcardViewModel()
    @State private var cards = [WordViewModel](repeating: FlashcardViewModel.sampleWord, count: 10)
    
@@ -25,7 +26,7 @@ struct FlashCardsView: View {
              ZStack {
                 // FIXME: offset adjustments need checking
                 ForEach(flashcardVM.words, id: \.id) { word in
-                   CardView(word: word)
+                   CardView(word: word, cardHeight: geometry.size.height * 0.4)
                 }
              }.onAppear(perform: {
                 flashcardVM.getStudyWords()
