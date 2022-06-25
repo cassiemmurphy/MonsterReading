@@ -56,7 +56,7 @@ class CoreDataManagerTest: XCTestCase {
       let definition = "the color of the sky"
       
       // when
-     coreDM.saveWord()
+     //coreDM.saveWord()
       
       // then
       
