@@ -22,13 +22,15 @@ struct NavigationFlowView: View {
       case .home:
          HomeView()
       case .flashCards:
-         TempNameView()
+         FlashCardsView()
       }
    }
 }
 
 struct NavigationFlowView_Previews: PreviewProvider {
     static var previews: some View {
-       NavigationFlowView().environmentObject(NavigationViewModel())
+       NavigationFlowView()
+          .environmentObject(NavigationViewModel())
+          .environmentObject(AppState(loggedIn: false))
     }
 }

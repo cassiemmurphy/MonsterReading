@@ -25,6 +25,7 @@ struct Monster_ReadingApp: App {
            if appState.loggedIn {
               HomeView()
                  .environmentObject(appState)
+                 .environmentObject(navigationVM)
            } else {
               NavigationFlowView()
                  .environmentObject(appState)

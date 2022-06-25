@@ -7,16 +7,17 @@
 
 import SwiftUI
 
-struct TempNameView: View {
-   @State private var flashcardVM = FlashcardViewModel()
-   
-   var studyListArray = ["hat", "cat", "bat", "flat"]
-   // FIXME: Use this as base for multiple views with this style screen. Refactor name to meet these needs
+struct FlashCardsView: View {
+   @EnvironmentObject var navigationVM: NavigationViewModel
+   @EnvironmentObject var appState: AppState
+   @StateObject private var flashcardVM = FlashcardViewModel()
+   @State private var cards = [WordViewModel](repeating: FlashcardViewModel.sampleWord, count: 10)
    
     var body: some View {
-       
        GeometryReader { geometry in
           VStack {
+             MenuTop()
+                .padding(.top)
              Image("LimeMelt")
                 .resizable()
 //                .scaledToFit()
@@ -24,16 +25,13 @@ struct TempNameView: View {
              ZStack {
                 // FIXME: offset adjustments need checking
                 ForEach(flashcardVM.words, id: \.id) { word in
-                   FlashcardView(word: word)
-                      .withOverlayStyle(bgColor: Color("MonsterBase"),
-                                        height: geometry.size.height * 0.4,
-                                        offsetY: geometry.size.height * 0.01)
+                   CardView(word: word)
                 }
-             }
-          }.background(Color("MonsterLime"))
-             .onAppear(perform: {
-                flashcardVM.addStudyList(studyList: studyListArray)
+             }.onAppear(perform: {
+                flashcardVM.getStudyWords()
              })
+          }.background(Color("MonsterLime"))
+             .ignoresSafeArea()
        }
     }
 }
@@ -42,6 +40,8 @@ struct TempNameView: View {
 
 struct FlashCardView_Previews: PreviewProvider {
     static var previews: some View {
-       TempNameView()
+       FlashCardsView()
+          .environmentObject(NavigationViewModel())
+          .environmentObject(AppState(loggedIn: true))
     }
 }

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MonsterPickView: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
+   @EnvironmentObject var appState: AppState
+   
    private var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible())]
    @State var monsterSelected = false
    // FIXME: update spacing
@@ -47,6 +49,8 @@ struct MonsterPickView: View {
 
 struct MonsterPickView_Previews: PreviewProvider {
     static var previews: some View {
-        MonsterPickView()
+       MonsterPickView()
+          .environmentObject(NavigationViewModel())
+          .environmentObject(AppState(loggedIn: false))
     }
 }

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SignInView: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
+   @EnvironmentObject var appState: AppState
+   
    @State var pin: String = ""
    @State var label = "Enter your 6 digit PIN to sign in"
    @State var showPin = false
@@ -113,6 +115,7 @@ struct SignInView_Previews: PreviewProvider {
        SignInView(accentColor: Color("MonsterLime"), handler: {pin, success in
           print(pin)
        }).environmentObject(NavigationViewModel())
+          .environmentObject(AppState(loggedIn: false))
     }
 }
 

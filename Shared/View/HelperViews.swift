@@ -96,6 +96,7 @@ private struct NavShapes {
 struct MenuTop: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
    @EnvironmentObject var appState: AppState
+   
    var previousPage: NavPage = .home
    
    var body: some View {
@@ -130,6 +131,7 @@ struct HelperViews_Previews: PreviewProvider {
           MonsterTitle(fontSize: 50)
           WelcomeNavigation(isEnabled: .constant(true), nextPage: .login, pageNumber: 1, accentColor: Color("MonsterBase"))
              .environmentObject(NavigationViewModel())
+             .environmentObject(AppState(loggedIn: false))
        }
     }
 }
