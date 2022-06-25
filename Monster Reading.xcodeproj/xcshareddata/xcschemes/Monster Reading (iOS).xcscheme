@@ -54,6 +54,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      customLLDBInitFile = "/Users/c.murphy/MonsterReading/Monster ReadingTests/TestPlan.xctestplan"
       shouldUseLaunchSchemeArgsEnv = "YES"
       codeCoverageEnabled = "YES"
       onlyGenerateCoverageForSpecifiedTargets = "YES">
@@ -68,11 +69,8 @@
       </CodeCoverageTargets>
       <TestPlans>
          <TestPlanReference
-            reference = "container:Tests/Tests iOS/Monster Reading (iOS).xctestplan"
+            reference = "container:Monster ReadingTests/TestPlan.xctestplan"
             default = "YES">
-         </TestPlanReference>
-         <TestPlanReference
-            reference = "container:Tests/Monster ReadingTests/TestPlan.xctestplan">
          </TestPlanReference>
       </TestPlans>
       <Testables>
