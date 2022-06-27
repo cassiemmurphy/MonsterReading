@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-struct WordViewModel {
+struct WordViewModel: Equatable {
    let cdWord: Word
    
    // FIXME: Do I need this?
@@ -34,5 +34,9 @@ struct WordViewModel {
    
    var image: String {
       return cdWord.image ?? ""
+   }
+   
+   var learned: Bool {
+      return cdWord.learned
    }
 }

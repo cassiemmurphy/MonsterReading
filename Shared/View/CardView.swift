@@ -8,8 +8,11 @@ import SwiftUI
 
 struct CardView: View {
    var word: WordViewModel
-   
    @State var cardHeight: CGFloat
+   var removal: (() -> Void)? = nil
+   var moveCard: (() -> Void)? = nil
+   
+   @State private var correctCount = 0
    @State private var showDefinition = false
    @State private var offset = CGSize.zero
    @StateObject private var soundManager = SoundManager()
@@ -60,7 +63,20 @@ struct CardView: View {
             }
             .onEnded { _ in
                if abs(offset.width) > 100 {
-                  // FIXME: Move card to the back of the list instead of remove it.
+                  if offset.width > 0 {
+                     if correctCount == 3 {
+                        // FIXME: remove from pile and change word to LEARNED
+                        removal?()
+                        print("LEARNED WORD")
+                     } else {
+                        correctCount += 1
+                        moveCard?()
+                     }
+                  } else {
+                     correctCount = 0
+                     moveCard?()
+                  }
+
                }
                else {
                   offset = .zero

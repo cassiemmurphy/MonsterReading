@@ -9,6 +9,7 @@ import Foundation
 class DictionaryConnection: ObservableObject {
 
    public typealias RequestHandler = ((_ data: [WordManager: Any]?, _ error: Error?) -> Void)
+   public var words = [WordManager]()
    
    private let appId = "f9e70613"
    private let appKey = "3a7c21194f6b52c89b3084afbfd5ad60"
@@ -32,13 +33,13 @@ class DictionaryConnection: ObservableObject {
       request.addValue(appId, forHTTPHeaderField: "app_id")
       request.addValue(appKey, forHTTPHeaderField: "app_key")
       
-      URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
+      URLSession.shared.dataTask(with: request) { data, _, error in
          guard let data = data, error == nil else { return }
          
          do {
             let word = try JSONDecoder().decode(WordManager.self, from: data)
             DispatchQueue.main.async {
-               // save word to CoreData 
+               self.saveWord(dictionaryWord: word)
             }
          } catch {
             print(error)
@@ -54,6 +55,8 @@ class DictionaryConnection: ObservableObject {
       word.definition = dictionaryWord.definition
       word.pronunciation = dictionaryWord.pronunciation
       word.phoneticSpelling = dictionaryWord.phoneticSpelling
+      
+      manager.saveWord()
    }
 }
    
