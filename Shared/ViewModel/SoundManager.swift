@@ -11,10 +11,18 @@ import AVKit
 class SoundManager : ObservableObject {
     var audioPlayer: AVPlayer?
 
-    func playSound(sound: String){
-        if let url = URL(string: sound) {
-            self.audioPlayer = AVPlayer(url: url)
-        }
+   func playSound(sound: String, word: String){
+       if let url = URL(string: sound) {
+          self.audioPlayer = AVPlayer(url: url)
+          audioPlayer?.play()
+      } else {
+        let utterance = AVSpeechUtterance(string: sound)
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        utterance.rate = 0.5
+        
+        let synthesizer = AVSpeechSynthesizer()
+        synthesizer.speak(utterance)
+      }
     }
    
    // FIXME: Include speech work in here

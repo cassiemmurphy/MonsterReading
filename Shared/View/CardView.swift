@@ -35,8 +35,7 @@ struct CardView: View {
                    .frame(width: 100, height: 100)
                 Spacer()
                 Button(action: {
-                   soundManager.playSound(sound: word.pronunciation)
-                   soundManager.audioPlayer?.play()
+                   soundManager.playSound(sound: word.pronunciation, word: word.word)
                 }, label: {
                    Image("PlaySound")
                       .resizable()
