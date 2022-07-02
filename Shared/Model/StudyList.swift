@@ -17,7 +17,7 @@ struct StudyList: Identifiable, Codable {
 }
 
 struct VocabWord: Identifiable, Codable {
-   @DocumentID var id: String?
+   var id: String
    var definition: String
    var pronunciation, image: String?
 }

@@ -14,6 +14,7 @@ enum NavPage {
    case monsterPick
    case home
    case flashCards
+   case studyLists
 }
 
 class NavigationViewModel: ObservableObject {
