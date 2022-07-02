@@ -5,6 +5,7 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 class AppState: ObservableObject {
    @Published var loggedIn: Bool
@@ -19,6 +20,10 @@ class AppState: ObservableObject {
 struct Monster_ReadingApp: App {
    @ObservedObject var appState = AppState(loggedIn: false)
    @StateObject var navigationVM = NavigationViewModel()
+   
+   init() {
+      FirebaseApp.configure()
+   }
 
     var body: some Scene {
         WindowGroup {

@@ -23,6 +23,8 @@ struct NavigationFlowView: View {
          HomeView()
       case .flashCards:
          FlashCardsView()
+      case .studyLists:
+         StudyListsView()
       }
    }
 }
