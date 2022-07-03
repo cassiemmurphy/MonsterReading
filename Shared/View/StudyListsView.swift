@@ -18,7 +18,11 @@ struct StudyListsView: View {
     var body: some View {
        VStack {
           MenuTop()
-          Text("Study Lists").font(.largeTitle)
+          Text("Study Lists")
+             .font(Font.custom("Helvetica Neue", size: 48))
+             .fontWeight(.semibold)
+             .foregroundColor(Color("MonsterSky"))
+             .glowBorder(color: .black, lineWidth: 2)
           if showLists {
              VStack {
                 HStack {
@@ -32,12 +36,26 @@ struct StudyListsView: View {
                 ScrollView {
                    LazyVGrid(columns: gridItemLayout) {
                       ForEach(model.lists) { list in
-                         VStack{
-                            Text(list.title).font(.title3)
-                            ForEach(list.words) { word in
-                               Text(word.id)
+                         Button {
+                            withAnimation {
+                               model.present()
                             }
+                         } label: {
+                            Text(list.title).font(Font.custom("Helvetica Neue", size: 24))
+                               .foregroundColor(.black)
                          }
+                         .padding()
+                         .background(.white)
+                         .clipShape(RoundedRectangle(cornerRadius: 25))
+                      }
+                   }
+                }
+             }
+             .overlay {
+                if model.popupState.isPresented {
+                   StudyListPopupView {
+                      withAnimation {
+                         model.dismiss()
                       }
                    }
                 }
@@ -46,7 +64,7 @@ struct StudyListsView: View {
              VStack {
                 GradeButton(grade: "Preschool", getList: { getStudyList(grade: "preschool") })
                 GradeButton(grade: "Kindergarten", getList: { getStudyList(grade: "kindergarten") })
-                GradeButton(grade: "First Grade", getList: { getStudyList(grade: "First Grade") })
+                GradeButton(grade: "First Grade", getList: { getStudyList(grade: "firstGrade") })
              }.padding()
           }
           Spacer()
@@ -62,6 +80,7 @@ struct StudyListsView: View {
 struct GradeButton: View {
    var grade: String
    var getList: () -> Void
+   @State var isHovering = false
    
    var body: some View {
       Button {
@@ -69,14 +88,20 @@ struct GradeButton: View {
       } label: {
          HStack {
             Spacer()
-            Text(grade)
+            Text(grade).font(Font.custom("Helvetica Neue", size: 24))
+               .foregroundColor(Color("MonsterBase"))
             Spacer()
          }.padding()
          
       }
       .padding()
-     .background(.white)
+      .background(isHovering ? .gray : .white)
      .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
+     .shadow(color: .gray, radius: 2, x: 0, y: 1)
+     .onHover { hovering in
+        print(hovering)
+        isHovering = hovering
+     }
    }
 }
 
@@ -87,18 +112,3 @@ struct StudyListsView_Previews: PreviewProvider {
           .environmentObject(AppState(loggedIn: true))
     }
 }
-
-//struct GradeButtonStyle: ButtonStyle {
-//   @State var isHovering = false
-//   var backgroundColor = Color.white
-////   var hoverColor = Color(TSKThemeManager.sharedInstance.currentTheme.)
-//
-//   func makeBody(configuration: Configuration) -> some View {
-//        configuration.label
-////          .buttonStyle(.plain)
-//          .frame(width: width, height: 26)
-//          .background(backgroundColor)
-//          .clipShape(RoundedRectangle(cornerRadius: 3))
-//          .shadow(color: Color(white: 0, opacity: 0.15), radius: 3, x: 0, y: 1)
-//    }
-//}

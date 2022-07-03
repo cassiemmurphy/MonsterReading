@@ -9,7 +9,18 @@ import Foundation
 import Firebase
 
 class StudyListViewModel: ObservableObject {
+   
+   enum PopupState {
+      case none
+      case present
+      case dismiss
+      
+      var isPresented: Bool { self == .present }
+   }
+   
+   @Published private(set) var popupState: PopupState = .none
    @Published var lists = [StudyList]()
+   
    let db = Firestore.firestore()
    
    func getStudyLists() {
@@ -25,26 +36,13 @@ class StudyListViewModel: ObservableObject {
       }
    }
    
-   
-   
-   private func getWordData(docID: String) -> [VocabWord] {
-      var words = [VocabWord]()
-      db.collection("studylists").getDocuments { snapshot, error in
-         if let error = error {
-            print("Error getting study words. \(error)")
-            return
-         }
-         guard let snapshot = snapshot else { return }
-         
-         DispatchQueue.main.async {
-            words = snapshot.documents.compactMap { queryDocumentSnapshot -> VocabWord? in
-               return try? queryDocumentSnapshot.data(as: VocabWord.self)
-            }
-         }
-      }
-
-      return words
+   func present() {
+      guard !popupState.isPresented else { return }
+      self.popupState = .present
    }
    
+   func dismiss() {
+      self.popupState = .dismiss
+   }
 }
 
