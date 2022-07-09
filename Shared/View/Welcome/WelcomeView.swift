@@ -11,6 +11,7 @@ import SwiftUI
 
 struct WelcomeView: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
+   @EnvironmentObject var authVM: AuthViewModel
    
     var body: some View {
        GeometryReader { geometry in
@@ -39,7 +40,7 @@ struct WelcomeView: View {
                          .foregroundColor(.gray)
                    }.padding()
                    Spacer()
-                   WelcomeNavigation(isEnabled: .constant(true), nextPage: .login,
+                   WelcomeNavigation(isEnabled: .constant(true), nextPage: .studyLists,
                                      pageNumber: 1, accentColor: Color("MonsterBase"))
                    Spacer()
                 }.withOverlayStyle(bgColor: .white,
@@ -55,7 +56,9 @@ struct WelcomeView: View {
 
 struct WelcomeView_Previews: PreviewProvider {
     static var previews: some View {
-       WelcomeView().environmentObject(NavigationViewModel())
+       WelcomeView()
+          .environmentObject(NavigationViewModel())
+          .environmentObject(AuthViewModel())
     }
 }
 

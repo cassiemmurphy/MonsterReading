@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
-   @EnvironmentObject var appState: AppState
+   @EnvironmentObject var authVM: AuthViewModel
    
    @State var bgColor = Color("MonsterLime")
    @State var isSignIn = true
@@ -61,7 +61,7 @@ struct Login_Previews: PreviewProvider {
     static var previews: some View {
        LoginView()
           .environmentObject(NavigationViewModel())
-          .environmentObject(AppState(loggedIn: false))
+          .environmentObject(AuthViewModel())
     }
 }
 

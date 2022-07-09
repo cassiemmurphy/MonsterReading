@@ -40,7 +40,7 @@ struct SignInView: View {
             }).padding(.trailing)
          }.padding()
          KeyPadView(pin: $pin, isDisabled: $isDisabled)
-         WelcomeNavigation(isEnabled: $pinSuccess, nextPage: .monsterPick,
+         WelcomeNavigation(isEnabled: $pinSuccess, nextPage: .home,
                            pageNumber: 2, accentColor: accentColor)
          Spacer()
       }.padding()
