@@ -24,7 +24,7 @@ class StudyListViewModel: ObservableObject {
    let db = Firestore.firestore()
    
    func getStudyLists() {
-      db.collection("StudyLists").getDocuments { snapshot, error in
+      db.collection("studylists").getDocuments { snapshot, error in
          // TODO: handle error instead of just escaping
          guard let snapshot = snapshot, error == nil  else { return }
 

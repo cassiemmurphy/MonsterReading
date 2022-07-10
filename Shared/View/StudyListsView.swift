@@ -9,7 +9,6 @@ import SwiftUI
 
 struct StudyListsView: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
-   @EnvironmentObject var appState: AppState
    @ObservedObject var model = StudyListViewModel()
    
    @State var showLists = false
@@ -75,6 +74,7 @@ struct StudyListsView: View {
       model.getStudyLists()
       showLists = true
    }
+
 }
 
 struct GradeButton: View {
@@ -109,6 +109,5 @@ struct StudyListsView_Previews: PreviewProvider {
     static var previews: some View {
        StudyListsView()
           .environmentObject(NavigationViewModel())
-          .environmentObject(AppState(loggedIn: true))
     }
 }

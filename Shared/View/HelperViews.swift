@@ -40,12 +40,12 @@ extension View {
 
 struct WelcomeNavigation: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
-   @EnvironmentObject var appState: AppState
    @Binding var isEnabled: Bool
    
    var nextPage: NavPage
    var pageNumber: Int
    var accentColor: Color
+   
    
    
    var body: some View {
@@ -59,9 +59,6 @@ struct WelcomeNavigation: View {
          }
          Spacer()
          Button(action: {
-            if nextPage == .home {
-               appState.loggedIn = true
-            }
             navigationVM.currentPage = nextPage
          }, label: {
             Image(systemName: "arrow.right.circle.fill")
@@ -99,20 +96,20 @@ private struct NavShapes {
 
 struct MenuTop: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
-   @EnvironmentObject var appState: AppState
+   @EnvironmentObject var authVM: AuthViewModel
    
    var previousPage: NavPage = .home
    
    var body: some View {
       HStack {
          Button(action: {
-            if appState.loggedIn {
-               navigationVM.currentPage = .home
-            } else {
+            if authVM.userSeission == nil {
                navigationVM.currentPage = previousPage
+            } else {
+               navigationVM.currentPage = .home
             }
          }, label: {
-            Image(systemName: appState.loggedIn ? "house.fill" : "chevron.left")
+            Image(systemName: authVM.userSeission == nil ? "chevron.left" : "house.fill")
                .resizable()
                .scaledToFit()
                .frame(height: 25)
@@ -135,7 +132,6 @@ struct HelperViews_Previews: PreviewProvider {
           MonsterTitle(fontSize: 50)
           WelcomeNavigation(isEnabled: .constant(true), nextPage: .login, pageNumber: 1, accentColor: Color("MonsterBase"))
              .environmentObject(NavigationViewModel())
-             .environmentObject(AppState(loggedIn: false))
        }
     }
 }

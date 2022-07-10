@@ -18,7 +18,7 @@ struct NavigationFlowView: View {
       case .login:
          LoginView()
       case .monsterPick:
-         MonsterPickView()
+         AddChildView()
       case .home:
          HomeView()
       case .flashCards:

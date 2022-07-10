@@ -7,12 +7,19 @@
 
 import SwiftUI
 
-struct MonsterPickView: View {
+struct AddChildView: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
-   @EnvironmentObject var appState: AppState
+   @EnvironmentObject var authVM: AuthViewModel
    
    private var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible())]
    @State var monsterSelected = false
+   @State var showMonsters = false
+   @State var childName = ""
+   @State var childGrade = ""
+   @State var childPin = ""
+   @State var confirmPin = ""
+   
+   
    // FIXME: update spacing
    
     var body: some View {
@@ -22,20 +29,44 @@ struct MonsterPickView: View {
              Spacer()
              Spacer()
              VStack {
-                LazyVGrid(columns: gridItemLayout, spacing: 10) {
-                   ForEach(monsterAvitars.indices) { index in
-                      Button(action: {
-                         print(monsterAvitars[index].name)
-                         monsterSelected = true
-                      }, label: {
-                         Image(monsterAvitars[index].name)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .frame(height: 140)
-                      })
-                   }
-                }.padding()
+               if showMonsters {
+                   LazyVGrid(columns: gridItemLayout, spacing: 10) {
+                      ForEach(monsterAvitars.indices) { index in
+                         Button(action: {
+                            print(monsterAvitars[index].name)
+                            monsterSelected = true
+                         }, label: {
+                            Image(monsterAvitars[index].name)
+                               .resizable()
+                               .scaledToFit()
+                               .frame(minWidth: 0, maxWidth: .infinity)
+                               .frame(height: 140)
+                         })
+                      }
+                   }.padding()
+                  Button("Save") {
+                     showMonsters = false
+                  }
+               } else {
+                  VStack(alignment: .leading, spacing: 20) {
+                     Spacer()
+                     Text("Enter the following details to add a child")
+                        .padding(.bottom)
+                     VStack {
+                        EntryField(placeholder: "Child Name", field: $childName)
+                        EntryField(placeholder: "Child Grade", field: $childGrade)
+                        EntryField(placeholder: "Child Pin", field: $childPin)
+                           .keyboardType(.numberPad)
+                        EntryField(placeholder: "Child Pin", field: $confirmPin)
+                           .keyboardType(.numberPad)
+                     }
+                     Spacer()
+                     Button("Pick your Monster") {
+                        showMonsters = true
+                     }
+                  }
+               }
+                
                 WelcomeNavigation(isEnabled: $monsterSelected, nextPage: .home, pageNumber: 3, accentColor: Color("MonsterPurple")).padding()
              }.padding()
                 .background(.white)
@@ -49,8 +80,8 @@ struct MonsterPickView: View {
 
 struct MonsterPickView_Previews: PreviewProvider {
     static var previews: some View {
-       MonsterPickView()
+       AddChildView()
           .environmentObject(NavigationViewModel())
-          .environmentObject(AppState(loggedIn: false))
+          .environmentObject(AuthViewModel())
     }
 }
