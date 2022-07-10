@@ -11,12 +11,13 @@ import FirebaseAuth
 
 class AuthViewModel: ObservableObject {
    @Published var userSeission: FirebaseAuth.User?
+   @Published var child = String
    
    init() {
       self.userSeission = Auth.auth().currentUser
    }
    
-   func login(email: String, password: String) {
+   func login(email: String, password: String) -> Bool{
       Auth.auth().signIn(withEmail: email, password: password) { result, error in
          if let error = error {
             print("Failed to login with error \(error.localizedDescription)")
@@ -26,6 +27,8 @@ class AuthViewModel: ObservableObject {
          guard let user = result?.user else { return }
          self.userSeission = user
       }
+      
+      return self.userSeission == nil
    }
    
    func register(name: String, email: String, password: String) {
@@ -48,12 +51,11 @@ class AuthViewModel: ObservableObject {
       }
    }
    
-   func addChild(name: String, grade: String, pin: String, monster: String) {
+   func addChild(name: String, grade: String, monster: String) {
       guard let user = userSeission else { return }
       
       let data = ["name": name,
                   "grade": grade,
-                  "pin": pin,
                   "monsterName": monster]
       
       Firestore.firestore().collection("users/\(user.uid)/children")

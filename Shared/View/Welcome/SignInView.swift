@@ -11,7 +11,8 @@ struct SignInView: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
    @EnvironmentObject var authVM: AuthViewModel
    
-   @State var pin: String = ""
+   @State var email = ""
+   @State var pin = ""
    @State var label = "Enter your 6 digit PIN to sign in"
    @State var showPin = false
    @State var isDisabled = false
@@ -19,11 +20,13 @@ struct SignInView: View {
 
    var accentColor: Color
    var maxDigits: Int = 6
-   var handler: (String, (Bool) -> Void) -> Void
+   var handler: (String, String, (Bool) -> Void) -> Void
 
    var body: some View {
        // FIXME: To link back to CD or other user management
       VStack(alignment: .leading) {
+         EntryField(placeholder: "Email", prompt: "", field: $email)
+            .padding(.bottom)
          Text(label)
          ZStack {
             pinDots
@@ -40,8 +43,12 @@ struct SignInView: View {
             }).padding(.trailing)
          }.padding()
          KeyPadView(pin: $pin, isDisabled: $isDisabled)
-         WelcomeNavigation(isEnabled: $pinSuccess, nextPage: .home,
-                           pageNumber: 2, accentColor: accentColor)
+         WelcomeNavigation(isEnabled: $pinSuccess,
+                           pageNumber: 2,
+                           accentColor: accentColor,
+                           action: {
+            navigationVM.currentPage = .home
+         })
          Spacer()
       }.padding()
     }
@@ -91,7 +98,7 @@ struct SignInView: View {
        if pin.count == maxDigits {
            isDisabled = true
            
-           handler(pin) { isSuccess in
+           handler(email, pin) { isSuccess in
                if isSuccess {
                    pinSuccess = true
                } else {
@@ -112,9 +119,8 @@ struct SignInView: View {
 
 struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
-       SignInView(accentColor: Color("MonsterLime"), handler: {pin, success in
-          print(pin)
-       }).environmentObject(NavigationViewModel())
+       SignInView(accentColor: Color("MonsterLime"), handler: {_,_,_ in })
+          .environmentObject(NavigationViewModel())
           .environmentObject(AuthViewModel())
     }
 }

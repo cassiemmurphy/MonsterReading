@@ -18,6 +18,7 @@ struct AddChildView: View {
    @State var childGrade = ""
    @State var childPin = ""
    @State var confirmPin = ""
+   @State var monsterName = ""
    
    
    // FIXME: update spacing
@@ -33,7 +34,7 @@ struct AddChildView: View {
                    LazyVGrid(columns: gridItemLayout, spacing: 10) {
                       ForEach(monsterAvitars.indices) { index in
                          Button(action: {
-                            print(monsterAvitars[index].name)
+                            monsterName = monsterAvitars[index].name
                             monsterSelected = true
                          }, label: {
                             Image(monsterAvitars[index].name)
@@ -53,12 +54,9 @@ struct AddChildView: View {
                      Text("Enter the following details to add a child")
                         .padding(.bottom)
                      VStack {
-                        EntryField(placeholder: "Child Name", field: $childName)
-                        EntryField(placeholder: "Child Grade", field: $childGrade)
-                        EntryField(placeholder: "Child Pin", field: $childPin)
-                           .keyboardType(.numberPad)
-                        EntryField(placeholder: "Child Pin", field: $confirmPin)
-                           .keyboardType(.numberPad)
+                        // FIXME: Prompts
+                        EntryField(placeholder: "Child Name", prompt: "", field: $childName)
+                        EntryField(placeholder: "Child Grade", prompt: "", field: $childGrade)
                      }
                      Spacer()
                      Button("Pick your Monster") {
@@ -66,8 +64,12 @@ struct AddChildView: View {
                      }
                   }
                }
-                
-                WelcomeNavigation(isEnabled: $monsterSelected, nextPage: .home, pageNumber: 3, accentColor: Color("MonsterPurple")).padding()
+                WelcomeNavigation(isEnabled: $monsterSelected,
+                                  pageNumber: 3,
+                                  accentColor: Color("MonsterPurple"),
+                                  action: {
+                   authVM.addChild(name: childName, grade: childGrade, monster: monsterName)
+                }).padding()
              }.padding()
                 .background(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 45, style: .continuous))
@@ -85,3 +87,10 @@ struct MonsterPickView_Previews: PreviewProvider {
           .environmentObject(AuthViewModel())
     }
 }
+
+
+/**
+ Button("Add child") {
+    authVM.addChild(name: "Nathan", grade: "First", pin: "234567", monster: "Monster3")
+ }
+ */

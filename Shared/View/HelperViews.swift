@@ -42,9 +42,9 @@ struct WelcomeNavigation: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
    @Binding var isEnabled: Bool
    
-   var nextPage: NavPage
    var pageNumber: Int
    var accentColor: Color
+   var action: () -> Void
    
    
    
@@ -59,7 +59,7 @@ struct WelcomeNavigation: View {
          }
          Spacer()
          Button(action: {
-            navigationVM.currentPage = nextPage
+            action()
          }, label: {
             Image(systemName: "arrow.right.circle.fill")
                .resizable()
@@ -130,7 +130,10 @@ struct HelperViews_Previews: PreviewProvider {
     static var previews: some View {
        VStack {
           MonsterTitle(fontSize: 50)
-          WelcomeNavigation(isEnabled: .constant(true), nextPage: .login, pageNumber: 1, accentColor: Color("MonsterBase"))
+          WelcomeNavigation(isEnabled: .constant(true),
+                            pageNumber: 1,
+                            accentColor: Color("MonsterBase"),
+                            action: {})
              .environmentObject(NavigationViewModel())
        }
     }

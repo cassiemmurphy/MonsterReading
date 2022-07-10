@@ -41,8 +41,8 @@ struct LoginView: View {
                 VStack {
                    Spacer()
                    if isSignIn {
-                      SignInView(accentColor: bgColor, handler: { pin, success in
-                         success(loginVM.checkPIN(pin: pin))
+                      SignInView(accentColor: bgColor, handler: { email, pin, success in
+                         success(authVM.login(email: "", password: pin))
                       })
                    } else {
                       SignUpView(loginVM: loginVM, accentColor: bgColor)

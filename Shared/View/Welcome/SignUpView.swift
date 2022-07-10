@@ -13,11 +13,6 @@ struct SignUpView: View {
    @StateObject var loginVM: LoginViewModel
    var accentColor: Color
    
-   @State private var name = ""
-   @State private var email = ""
-   @State private var password = ""
-   @State private var confirmPassword = ""
-   
    
    var body: some View {
    // FIXME: To link back to CD or other user management
@@ -25,33 +20,39 @@ struct SignUpView: View {
          Text("Enter the following details to sign up")
             .padding(.bottom)
          VStack {
-            EntryField(placeholder: "Parent Name", field: $name)
-            EntryField(placeholder: "Parent Email", field: $email)
+            EntryField(placeholder: "Parent Name",
+                       prompt: loginVM.namePrompt,
+                       field: $loginVM.name)
+            EntryField(placeholder: "Parent Email",
+                       prompt: loginVM.emailPrompt,
+                       field: $loginVM.email)
                .keyboardType(.decimalPad)
-            EntryField(placeholder: "Parent Password", field: $password)
-            EntryField(placeholder: "Confirm Password", field: $confirmPassword)
+            EntryField(placeholder: "Enter a 6 digit numeric login PIN",
+                       prompt: loginVM.pinPrompt,
+                       isSecure: true,
+                       field: $loginVM.pin)
+               .keyboardType(.numberPad)
+            EntryField(placeholder: "Confirm 6 digit numeric login PIN",
+                       prompt: loginVM.confirmPinPrompt,
+                       isSecure: true,
+                       field: $loginVM.pinConfirm)
+               .keyboardType(.numberPad)
          }
          Spacer()
-         Button("Add child") {
-            authVM.addChild(name: "Nathan", grade: "First", pin: "234567", monster: "Monster3")
-         }
-         WelcomeNavigation(isEnabled: $loginVM.formValid, nextPage: .monsterPick, pageNumber: 2, accentColor: accentColor)
+         WelcomeNavigation(isEnabled: $loginVM.formValid,
+                           pageNumber: 2,
+                           accentColor: accentColor,
+                           action: {
+            authVM.register(name: loginVM.name, email: loginVM.email, password: loginVM.pin)
+            navigationVM.currentPage = .monsterPick
+         })
       }.padding()
    }
 }
-   
-   
-   /*
-    EntryField(placeholder: "Enter a 6 digit numeric login PIN", prompt: loginVM.pinPrompt, isSecure: true, field: $loginVM.pin)
-       .keyboardType(.numberPad)
-    EntryField(placeholder: "Confirm 6 digit numeric login PIN", prompt: loginVM.confirmPinPrompt, isSecure: true, field: $loginVM.pinConfirm)
-       .keyboardType(.numberPad)
- }
-    */
 
 struct EntryField: View {
    var placeholder: String
-   //var prompt: String
+   var prompt: String
    var isSecure = false
    
    @Binding var field: String
@@ -66,7 +67,7 @@ struct EntryField: View {
             }
          }.padding(10)
           .overlay(RoundedRectangle(cornerRadius: 40).stroke(Color.gray, lineWidth: 1))
-         Text("prompt")
+         Text(prompt)
       }
    }
 }

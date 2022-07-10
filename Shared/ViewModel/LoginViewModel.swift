@@ -10,14 +10,12 @@ import Combine
 
 class LoginViewModel: ObservableObject {
    // FIXME: Temp form fields, to be adjusted
-   @Published var firstName: String = ""
-   @Published var lastName: String = ""
+   @Published var name: String = ""
    @Published var email: String = ""
    @Published var pin: String = ""
    @Published var pinConfirm: String = ""
    
-   @Published var firstNameValid = false
-   @Published var lastNameValid = false
+   @Published var nameValid = false
    @Published var emailValid = false
    @Published var pinValid = false
    @Published var pinConfirmValid = false
@@ -31,20 +29,12 @@ class LoginViewModel: ObservableObject {
    var testPIN = "628426"
    
    init() {
-      $firstName
-         .map { firstName in
-            return self.namePredicate.evaluate(with: firstName)
+      $name
+         .map { name in
+            return self.namePredicate.evaluate(with: name)
          }
-         .assign(to: \.firstNameValid, on: self)
+         .assign(to: \.nameValid, on: self)
          .store(in: &cancellableSet)
-      
-      $lastName
-         .map { lastName in
-            return self.namePredicate.evaluate(with: lastName)
-         }
-         .assign(to: \.lastNameValid, on: self)
-         .store(in: &cancellableSet)
-      
       $email
          .map { email in
             return self.emailPredicate.evaluate(with: email)
@@ -66,7 +56,7 @@ class LoginViewModel: ObservableObject {
          .assign(to: \.pinConfirmValid, on: self)
          .store(in: &cancellableSet)
       
-      Publishers.CombineLatest4($lastNameValid, $emailValid, $pinValid, $pinConfirmValid)
+      Publishers.CombineLatest4($nameValid, $emailValid, $pinValid, $pinConfirmValid)
          .map { lastNameValid, emailValid, pinValid, pinConfirmValid in
             return (lastNameValid && emailValid && pinValid && pinConfirmValid)
          }
@@ -74,12 +64,8 @@ class LoginViewModel: ObservableObject {
          .store(in: &cancellableSet)
    }
    
-   var firstNamePrompt: String {
-      (firstNameValid || firstName.isEmpty) ? "" : "Enter a valid first name"
-   }
-   
-   var lastNamePrompt: String {
-      (lastNameValid || lastName.isEmpty) ? "" : "Enter a valid last name"
+   var namePrompt: String {
+      (nameValid || name.isEmpty) ? "" : "Enter a valid first name"
    }
    
    var emailPrompt: String {

@@ -40,8 +40,10 @@ struct WelcomeView: View {
                          .foregroundColor(.gray)
                    }.padding()
                    Spacer()
-                   WelcomeNavigation(isEnabled: .constant(true), nextPage: .login,
-                                     pageNumber: 1, accentColor: Color("MonsterBase"))
+                   WelcomeNavigation(isEnabled: .constant(true),
+                                     pageNumber: 1,
+                                     accentColor: Color("MonsterBase"),
+                                     action: { navigationVM.currentPage = .login })
                    Spacer()
                 }.withOverlayStyle(bgColor: .white,
                                      height: geometry.size.height * 0.45,
