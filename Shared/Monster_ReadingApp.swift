@@ -5,20 +5,11 @@
 //
 
 import SwiftUI
-import FirebaseCore
-
-class AppState: ObservableObject {
-   @Published var loggedIn: Bool
-   
-   init(loggedIn: Bool) {
-      self.loggedIn = loggedIn
-   }
-}
-
+import Firebase
 
 @main
 struct Monster_ReadingApp: App {
-   @ObservedObject var appState = AppState(loggedIn: false)
+   @StateObject var authVM = AuthViewModel()
    @StateObject var navigationVM = NavigationViewModel()
    
    init() {
@@ -27,13 +18,13 @@ struct Monster_ReadingApp: App {
 
     var body: some Scene {
         WindowGroup {
-           if appState.loggedIn {
-              HomeView()
-                 .environmentObject(appState)
+           if authVM.userSeission == nil {
+              NavigationFlowView()
+                 .environmentObject(authVM)
                  .environmentObject(navigationVM)
            } else {
-              NavigationFlowView()
-                 .environmentObject(appState)
+              HomeView()
+                 .environmentObject(authVM)
                  .environmentObject(navigationVM)
            }
         }

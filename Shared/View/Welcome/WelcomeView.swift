@@ -40,7 +40,7 @@ struct WelcomeView: View {
                          .foregroundColor(.gray)
                    }.padding()
                    Spacer()
-                   WelcomeNavigation(isEnabled: .constant(true), nextPage: .studyLists,
+                   WelcomeNavigation(isEnabled: .constant(true), nextPage: .login,
                                      pageNumber: 1, accentColor: Color("MonsterBase"))
                    Spacer()
                 }.withOverlayStyle(bgColor: .white,

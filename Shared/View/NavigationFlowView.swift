@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NavigationFlowView: View {
-   @EnvironmentObject var appState: AppState
+   @EnvironmentObject var authVM: AuthViewModel
    @EnvironmentObject var navigationVM: NavigationViewModel
    
    var body: some View {
@@ -33,6 +33,6 @@ struct NavigationFlowView_Previews: PreviewProvider {
     static var previews: some View {
        NavigationFlowView()
           .environmentObject(NavigationViewModel())
-          .environmentObject(AppState(loggedIn: false))
+          .environmentObject(AuthViewModel())
     }
 }
