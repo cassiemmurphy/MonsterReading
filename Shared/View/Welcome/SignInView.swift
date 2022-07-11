@@ -48,7 +48,8 @@ struct SignInView: View {
                            pageNumber: 2,
                            accentColor: accentColor,
                            action: {
-            if authVM.login(email: loginVM.email, password: pin) {
+            authVM.login(email: loginVM.email, password: pin)
+            if authVM.successfulLogin {
                navigationVM.currentPage = .home
             } else {
                pin = ""
@@ -57,7 +58,6 @@ struct SignInView: View {
                label = "Incorrect email or PIN, please try again"
                labelColor = .red
             }
-            
          })
          Spacer()
       }.padding()

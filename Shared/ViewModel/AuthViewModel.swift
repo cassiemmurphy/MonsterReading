@@ -13,6 +13,7 @@ class AuthViewModel: ObservableObject {
    @Published var userSeission: FirebaseAuth.User?
    @Published var childUser: Child?
    @Published var children = [Child]()
+   @Published var successfulLogin = false
    
    let db = Firestore.firestore()
    
@@ -20,18 +21,17 @@ class AuthViewModel: ObservableObject {
       self.userSeission = Auth.auth().currentUser
    }
    
-   func login(email: String, password: String) -> Bool {
+   func login(email: String, password: String) {
       Auth.auth().signIn(withEmail: email, password: password) { result, error in
          if let error = error {
             print("Failed to login with error \(error.localizedDescription)")
-            return
+            self.successfulLogin = false
          }
          
          guard let user = result?.user else { return }
+         self.successfulLogin = true
          self.userSeission = user
       }
-      
-      return self.userSeission == nil
    }
    
    func register(name: String, email: String, password: String) {
