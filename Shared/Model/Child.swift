@@ -1,0 +1,16 @@
+//
+//  Child.swift
+//  Monster Reading
+//
+//  Created by Murphy, Cassie on 7/10/22.
+//
+
+import Foundation
+import FirebaseFirestoreSwift
+
+struct Child: Identifiable, Codable {
+   @DocumentID var id: String?
+   var name: String
+   var grade: String
+   var monster: String
+}

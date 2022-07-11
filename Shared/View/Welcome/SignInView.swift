@@ -9,22 +9,26 @@ import SwiftUI
 
 struct SignInView: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
-   @EnvironmentObject var appState: AppState
+   @EnvironmentObject var authVM: AuthViewModel
+   @StateObject var loginVM: LoginViewModel
    
-   @State var pin: String = ""
+   @State var pin = ""
    @State var label = "Enter your 6 digit PIN to sign in"
    @State var showPin = false
    @State var isDisabled = false
-   @State var pinSuccess = false
+   @State var labelColor = Color.black
+   @State var pinComplete = false
 
    var accentColor: Color
    var maxDigits: Int = 6
-   var handler: (String, (Bool) -> Void) -> Void
 
    var body: some View {
        // FIXME: To link back to CD or other user management
       VStack(alignment: .leading) {
+         EntryField(placeholder: "Email", prompt: loginVM.emailPrompt, field: $loginVM.email)
+            .padding(.bottom)
          Text(label)
+            .foregroundColor(labelColor)
          ZStack {
             pinDots
             backgroundField
@@ -40,16 +44,29 @@ struct SignInView: View {
             }).padding(.trailing)
          }.padding()
          KeyPadView(pin: $pin, isDisabled: $isDisabled)
-         WelcomeNavigation(isEnabled: $pinSuccess, nextPage: .monsterPick,
-                           pageNumber: 2, accentColor: accentColor)
+         WelcomeNavigation(isEnabled: $pinComplete,
+                           pageNumber: 2,
+                           accentColor: accentColor,
+                           action: {
+            authVM.login(email: loginVM.email, password: pin)
+            if authVM.successfulLogin {
+               navigationVM.currentPage = .home
+            } else {
+               pin = ""
+               pinComplete = false
+               isDisabled = false
+               label = "Incorrect email or PIN, please try again"
+               labelColor = .red
+            }
+         })
          Spacer()
       }.padding()
     }
    
    private var backgroundField: some View {
        let boundPin = Binding<String>(get: { self.pin }, set: { newValue in
-           self.pin = newValue
-           self.submitPin()
+          self.pin = newValue
+          self.submitPin()
        })
        
        return TextField("", text: boundPin, onCommit: submitPin)
@@ -89,17 +106,8 @@ struct SignInView: View {
        }
        
        if pin.count == maxDigits {
-           isDisabled = true
-           
-           handler(pin) { isSuccess in
-               if isSuccess {
-                   pinSuccess = true
-               } else {
-                   pin = ""
-                   isDisabled = false
-                   label = "Incorrect PIN, please try again"
-               }
-           }
+          pinComplete = true
+          isDisabled = true
        }
        
        if pin.count > maxDigits {
@@ -107,15 +115,13 @@ struct SignInView: View {
            submitPin()
        }
    }
-   
 }
 
 struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
-       SignInView(accentColor: Color("MonsterLime"), handler: {pin, success in
-          print(pin)
-       }).environmentObject(NavigationViewModel())
-          .environmentObject(AppState(loggedIn: false))
+       SignInView(loginVM: LoginViewModel(), accentColor: Color("MonsterLime"))
+          .environmentObject(NavigationViewModel())
+          .environmentObject(AuthViewModel())
     }
 }
 

@@ -32,16 +32,20 @@ extension View {
          .frame(height: height, alignment: .bottom)
          .offset(x: 0, y: offsetY)
    }
+   
+   func glowBorder(color: Color, lineWidth: Int) -> some View {
+       self.modifier(GlowBorder(color: color, lineWidth: lineWidth))
+   }
 }
 
 struct WelcomeNavigation: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
-   @EnvironmentObject var appState: AppState
    @Binding var isEnabled: Bool
    
-   var nextPage: NavPage
    var pageNumber: Int
    var accentColor: Color
+   var action: () -> Void
+   
    
    
    var body: some View {
@@ -55,10 +59,7 @@ struct WelcomeNavigation: View {
          }
          Spacer()
          Button(action: {
-            if nextPage == .home {
-               appState.loggedIn = true
-            }
-            navigationVM.currentPage = nextPage
+            action()
          }, label: {
             Image(systemName: "arrow.right.circle.fill")
                .resizable()
@@ -95,20 +96,20 @@ private struct NavShapes {
 
 struct MenuTop: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
-   @EnvironmentObject var appState: AppState
+   @EnvironmentObject var authVM: AuthViewModel
    
    var previousPage: NavPage = .home
    
    var body: some View {
       HStack {
          Button(action: {
-            if appState.loggedIn {
-               navigationVM.currentPage = .home
-            } else {
+            if authVM.userSeission == nil {
                navigationVM.currentPage = previousPage
+            } else {
+               navigationVM.currentPage = .home
             }
          }, label: {
-            Image(systemName: appState.loggedIn ? "house.fill" : "chevron.left")
+            Image(systemName: authVM.userSeission == nil ? "chevron.left" : "house.fill")
                .resizable()
                .scaledToFit()
                .frame(height: 25)
@@ -129,9 +130,28 @@ struct HelperViews_Previews: PreviewProvider {
     static var previews: some View {
        VStack {
           MonsterTitle(fontSize: 50)
-          WelcomeNavigation(isEnabled: .constant(true), nextPage: .login, pageNumber: 1, accentColor: Color("MonsterBase"))
+          WelcomeNavigation(isEnabled: .constant(true),
+                            pageNumber: 1,
+                            accentColor: Color("MonsterBase"),
+                            action: {})
              .environmentObject(NavigationViewModel())
-             .environmentObject(AppState(loggedIn: false))
        }
+    }
+}
+
+struct GlowBorder: ViewModifier {
+    var color: Color
+    var lineWidth: Int
+    
+    func body(content: Content) -> some View {
+        applyShadow(content: AnyView(content), lineWidth: lineWidth)
+    }
+    
+    func applyShadow(content: AnyView, lineWidth: Int) -> AnyView {
+        if lineWidth == 0 {
+            return content
+        } else {
+            return applyShadow(content: AnyView(content.shadow(color: color, radius: 1)), lineWidth: lineWidth - 1)
+        }
     }
 }

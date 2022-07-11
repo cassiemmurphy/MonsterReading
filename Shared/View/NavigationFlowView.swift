@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NavigationFlowView: View {
-   @EnvironmentObject var appState: AppState
+   @EnvironmentObject var authVM: AuthViewModel
    @EnvironmentObject var navigationVM: NavigationViewModel
    
    var body: some View {
@@ -17,12 +17,16 @@ struct NavigationFlowView: View {
          WelcomeView()
       case .login:
          LoginView()
-      case .monsterPick:
-         MonsterPickView()
+      case .addChild:
+         AddChildView()
       case .home:
          HomeView()
       case .flashCards:
          FlashCardsView()
+      case .studyLists:
+         StudyListsView()
+      case .childSelection:
+         ChildSelectionView()
       }
    }
 }
@@ -31,6 +35,6 @@ struct NavigationFlowView_Previews: PreviewProvider {
     static var previews: some View {
        NavigationFlowView()
           .environmentObject(NavigationViewModel())
-          .environmentObject(AppState(loggedIn: false))
+          .environmentObject(AuthViewModel())
     }
 }
