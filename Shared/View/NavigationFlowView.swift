@@ -17,7 +17,7 @@ struct NavigationFlowView: View {
          WelcomeView()
       case .login:
          LoginView()
-      case .monsterPick:
+      case .addChild:
          AddChildView()
       case .home:
          HomeView()
@@ -25,6 +25,8 @@ struct NavigationFlowView: View {
          FlashCardsView()
       case .studyLists:
          StudyListsView()
+      case .childSelection:
+         ChildSelectionView()
       }
    }
 }

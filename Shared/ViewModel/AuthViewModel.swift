@@ -11,13 +11,16 @@ import FirebaseAuth
 
 class AuthViewModel: ObservableObject {
    @Published var userSeission: FirebaseAuth.User?
-   @Published var child = String
+   @Published var childUser: Child?
+   @Published var children = [Child]()
+   
+   let db = Firestore.firestore()
    
    init() {
       self.userSeission = Auth.auth().currentUser
    }
    
-   func login(email: String, password: String) -> Bool{
+   func login(email: String, password: String) -> Bool {
       Auth.auth().signIn(withEmail: email, password: password) { result, error in
          if let error = error {
             print("Failed to login with error \(error.localizedDescription)")
@@ -63,6 +66,21 @@ class AuthViewModel: ObservableObject {
          .setData(data) { _ in
             print("child created")
          }
+      
+   }
+   
+   func getChildren() {
+      guard let user = userSeission else { return }
+      db.collection("users/\(user.uid)/children").getDocuments { snapshot, error in
+         // TODO: handle error instead of just escaping
+         guard let snapshot = snapshot, error == nil  else { return }
+         
+         DispatchQueue.main.async {
+            self.children = snapshot.documents.compactMap({ queryDocumentSnapshot -> Child? in
+               return try? queryDocumentSnapshot.data(as: Child.self)
+            })
+         }
+      }
       
    }
    

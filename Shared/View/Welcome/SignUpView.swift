@@ -44,7 +44,7 @@ struct SignUpView: View {
                            accentColor: accentColor,
                            action: {
             authVM.register(name: loginVM.name, email: loginVM.email, password: loginVM.pin)
-            navigationVM.currentPage = .monsterPick
+            navigationVM.currentPage = .addChild
          })
       }.padding()
    }

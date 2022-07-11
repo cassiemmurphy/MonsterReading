@@ -26,8 +26,11 @@ struct KeyPadView: View {
               print("Use FaceID here")
               break
            case "⌫":
-               pin.removeLast()
-               if pin.isEmpty { pin = "" }
+              if pin.isEmpty {
+                 pin = ""
+                 break
+              }
+              pin.removeLast()
            case _ where pin == "0": pin = key
            default: pin += key
            }
