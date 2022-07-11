@@ -10,6 +10,13 @@ struct HomeView: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
    @EnvironmentObject var authVM: AuthViewModel
    
+   /*
+    TODO: add popover on icon upper right: Switch Profile, Parent Profile, Sign Out
+    Make parent page
+    Make Child Page
+    Adjust points and graphs
+    */
+   
     var body: some View {
        VStack(alignment: .leading) {
           MenuTop()
