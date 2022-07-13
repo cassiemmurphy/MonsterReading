@@ -43,30 +43,18 @@ struct ChildSelectionView: View {
                 }
 
              }
-             
-             ForEach(1...3, id: \.self) { index in
-                Button {
-                   print("child")
-                } label: {
-                   VStack {
-                      Image("Monster\(index)")
-                         .resizable()
-                         .scaledToFit()
-                         .clipShape(RoundedRectangle(cornerRadius: 25))
-                         .shadow(radius: 2, x: 0, y: 1)
-                      Text("Child Name")
-                         .font(Font.custom("Helvetica Neue", size: 30))
-                         .fontWeight(.bold)
-                         .foregroundColor(.white)
-                   }
-                }
-             }
              Button {
                 print("parent")
              } label: {
                 Text("Parent Profile")
              }.padding()
                 .background(.white)
+             Button {
+                authVM.signOut()
+             } label: {
+                Text("Sign Out")
+             }
+
           }.padding(50)
        }.onAppear {
           authVM.getChildren()

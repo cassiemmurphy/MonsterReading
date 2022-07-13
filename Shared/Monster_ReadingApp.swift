@@ -23,7 +23,7 @@ struct Monster_ReadingApp: App {
                  .environmentObject(authVM)
                  .environmentObject(navigationVM)
            } else {
-              HomeView()
+              ChildSelectionView()
                  .environmentObject(authVM)
                  .environmentObject(navigationVM)
            }

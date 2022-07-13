@@ -18,6 +18,12 @@ struct SignUpView: View {
    var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible())]
    var accentColor: Color
    
+   /*
+    TODO: Fix child add situation
+    Fix Style
+    Edit call to add child to send CHILD object
+    */
+   
    var body: some View {
    // FIXME: To link back to CD or other user management
       VStack(alignment: .leading, spacing: 20) {
@@ -48,6 +54,19 @@ struct SignUpView: View {
                showChildOverlay = false
             }
          }
+         VStack(alignment: .leading) {
+            Text(children.isEmpty ? "No Children Added" : "Children Added:")
+            VStack {
+               ForEach(children) { child in
+                  HStack {
+                     Image(child.monster).resizable().scaledToFit()
+                     Text(child.name)
+                     Text(child.grade.rawValue)
+                  }.frame(height: 25)
+               }
+            }
+         }.padding()
+            .border(accentColor, width: 2)
          Button {
             showChildOverlay = true
          } label: {
@@ -58,8 +77,10 @@ struct SignUpView: View {
                            pageNumber: 2,
                            accentColor: accentColor,
                            action: {
-            authVM.register(name: loginVM.name, email: loginVM.email, password: loginVM.pin)
-         })
+            authVM.register(name: loginVM.name,
+                            email: loginVM.email,
+                            password: loginVM.pin,
+                            children: children)})
       }.padding()
    }
 }

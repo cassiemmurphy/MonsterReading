@@ -34,7 +34,7 @@ class AuthViewModel: ObservableObject {
       }
    }
    
-   func register(name: String, email: String, password: String) {
+   func register(name: String, email: String, password: String, children: [Child]) {
       Auth.auth().createUser(withEmail: email, password: password) { result, error in
          if let error = error {
             print("Failed to register with error \(error.localizedDescription)")
@@ -49,17 +49,21 @@ class AuthViewModel: ObservableObject {
          Firestore.firestore().collection("users")
             .document(user.uid)
             .setData(data) { _ in
-               print("User created..")
+               print("User created")
             }
+         
+         for child in children {
+            self.addChild(child: child)
+         }
       }
    }
    
-   func addChild(name: String, grade: Grade, monster: String) {
+   func addChild(child: Child) {
       guard let user = userSeission else { return }
       
-      let data = ["name": name,
-                  "grade": grade.rawValue,
-                  "monsterName": monster]
+      let data = ["name": child.name,
+                  "grade": child.grade.rawValue,
+                  "monsterName": child.monster]
       
       Firestore.firestore().collection("users/\(user.uid)/children")
          .document()

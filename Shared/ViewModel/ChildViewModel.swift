@@ -8,6 +8,6 @@
 import Foundation
 
 class ChildViewModel: ObservableObject {
-   @Published var child = Child(name: "", grade: .preschool, monster: "")
+   @Published var child = Child(name: "", grade: .preschool, monster: "Monster1")
    
 }
