@@ -54,11 +54,11 @@ class AuthViewModel: ObservableObject {
       }
    }
    
-   func addChild(name: String, grade: String, monster: String) {
+   func addChild(name: String, grade: Grade, monster: String) {
       guard let user = userSeission else { return }
       
       let data = ["name": name,
-                  "grade": grade,
+                  "grade": grade.rawValue,
                   "monsterName": monster]
       
       Firestore.firestore().collection("users/\(user.uid)/children")
@@ -88,4 +88,8 @@ class AuthViewModel: ObservableObject {
       userSeission = nil
       try? Auth.auth().signOut()
    }
+}
+
+enum Grade: String, Codable, CaseIterable {
+   case preschool, kindergarten, first
 }

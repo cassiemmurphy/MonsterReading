@@ -11,7 +11,6 @@ import SwiftUI
 enum NavPage {
    case welcome
    case login
-   case addChild
    case home
    case flashCards
    case studyLists

@@ -11,8 +11,12 @@ struct SignUpView: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
    @EnvironmentObject var authVM: AuthViewModel
    @StateObject var loginVM: LoginViewModel
-   var accentColor: Color
    
+   @State var showChildOverlay = false
+   @State var children: [Child] = []
+   
+   var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible())]
+   var accentColor: Color
    
    var body: some View {
    // FIXME: To link back to CD or other user management
@@ -32,11 +36,22 @@ struct SignUpView: View {
                        isSecure: true,
                        field: $loginVM.pin)
                .keyboardType(.numberPad)
+            // TODO: Fix placeholder showing odd
             EntryField(placeholder: "Confirm 6 digit numeric login PIN",
                        prompt: loginVM.confirmPinPrompt,
                        isSecure: true,
                        field: $loginVM.pinConfirm)
                .keyboardType(.numberPad)
+         }.popover(isPresented: $showChildOverlay) {
+            AddChildView { child in
+               children.append(child)
+               showChildOverlay = false
+            }
+         }
+         Button {
+            showChildOverlay = true
+         } label: {
+            Text(children.isEmpty ? "Add another child" : "Add a child")
          }
          Spacer()
          WelcomeNavigation(isEnabled: $loginVM.formValid,
@@ -44,7 +59,6 @@ struct SignUpView: View {
                            accentColor: accentColor,
                            action: {
             authVM.register(name: loginVM.name, email: loginVM.email, password: loginVM.pin)
-            navigationVM.currentPage = .addChild
          })
       }.padding()
    }

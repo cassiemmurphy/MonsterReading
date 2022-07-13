@@ -11,6 +11,7 @@ import FirebaseFirestoreSwift
 struct Child: Identifiable, Codable {
    @DocumentID var id: String?
    var name: String
-   var grade: String
+   var grade: Grade
    var monster: String
+
 }

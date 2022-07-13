@@ -29,6 +29,7 @@ struct HomeView: View {
              Spacer()
              Button("Sign Out") {
                 authVM.signOut()
+                navigationVM.currentPage = .welcome
              }.padding(.trailing)
           }
 
