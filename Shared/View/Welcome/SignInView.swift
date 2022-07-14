@@ -50,7 +50,7 @@ struct SignInView: View {
                            action: {
             authVM.login(email: loginVM.email, password: pin)
             if authVM.successfulLogin {
-               navigationVM.currentPage = .home
+               navigationVM.currentPage = .childSelection
             } else {
                pin = ""
                pinComplete = false

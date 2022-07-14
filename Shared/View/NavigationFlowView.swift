@@ -17,14 +17,14 @@ struct NavigationFlowView: View {
             WelcomeView()
          case .login:
             LoginView()
+         case .childSelection:
+            ChildSelectionView()
          case .home:
             HomeView()
          case .flashCards:
             FlashCardsView()
          case .studyLists:
             StudyListsView()
-         case .childSelection:
-            ChildSelectionView()
       }
    }
 }

@@ -18,15 +18,12 @@ struct Monster_ReadingApp: App {
 
     var body: some Scene {
         WindowGroup {
-           if authVM.userSeission == nil {
-              NavigationFlowView()
-                 .environmentObject(authVM)
-                 .environmentObject(navigationVM)
-           } else {
-              ChildSelectionView()
-                 .environmentObject(authVM)
-                 .environmentObject(navigationVM)
-           }
+           NavigationFlowView()
+              .environmentObject(authVM)
+              .environmentObject(navigationVM)
+              .onAppear {
+                 navigationVM.currentPage = authVM.userSeission == nil ? .welcome : .childSelection
+              }
         }
     }
 }
