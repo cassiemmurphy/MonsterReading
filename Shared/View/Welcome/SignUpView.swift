@@ -57,7 +57,7 @@ struct SignUpView: View {
          VStack(alignment: .leading) {
             Text(children.isEmpty ? "No Children Added" : "Children Added:")
             VStack {
-               ForEach(children) { child in
+               ForEach(children, id: \.id) { child in
                   HStack {
                      Image(child.monster).resizable().scaledToFit()
                      Text(child.name)

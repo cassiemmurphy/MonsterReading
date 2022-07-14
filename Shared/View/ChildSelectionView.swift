@@ -18,6 +18,7 @@ struct ChildSelectionView: View {
     Button pass to parent profile
     Style child buttons <-- can text be fluid to size to certain width?
     Style Parent Button
+    Style or remove sign out button
     */
    
     var body: some View {
@@ -30,18 +31,20 @@ struct ChildSelectionView: View {
              ForEach(authVM.children) { child in
                 Button {
                    authVM.childUser = child
+                   navigationVM.currentPage = .home
                 } label: {
-                   Image(child.monster)
-                      .resizable()
-                      .scaledToFit()
-                      .clipShape(RoundedRectangle(cornerRadius: 25))
-                      .shadow(radius: 2, x: 0, y: 1)
-                   Text(child.name)
-                      .font(Font.custom("Helvetica Neue", size: 30))
-                      .fontWeight(.bold)
-                      .foregroundColor(.white)
+                   VStack {
+                      Image(child.monster)
+                         .resizable()
+                         .scaledToFit()
+                         .clipShape(RoundedRectangle(cornerRadius: 25))
+                         .shadow(radius: 2, x: 0, y: 1)
+                      Text(child.name)
+                         .font(Font.custom("Helvetica Neue", size: 30))
+                         .fontWeight(.bold)
+                         .foregroundColor(.white)
+                   }
                 }
-
              }
              Button {
                 print("parent")
@@ -56,8 +59,6 @@ struct ChildSelectionView: View {
              }
 
           }.padding(50)
-       }.onAppear {
-          authVM.getChildren()
        }
     }
 }

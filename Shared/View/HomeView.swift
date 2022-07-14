@@ -15,6 +15,7 @@ struct HomeView: View {
     Make parent page
     Make Child Page
     Adjust points and graphs
+    Remove Sign Out Button
     */
    
     var body: some View {
@@ -33,7 +34,7 @@ struct HomeView: View {
              }.padding(.trailing)
           }
 
-          Text("Cassie!")
+          Text(authVM.childUser?.name.capitalized ?? "")
              .foregroundColor(.black)
              .font(Font.custom("Helvetica Neue", size: 45))
              .fontWeight(.semibold)

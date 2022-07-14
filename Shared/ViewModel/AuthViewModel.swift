@@ -19,6 +19,7 @@ class AuthViewModel: ObservableObject {
    
    init() {
       self.userSeission = Auth.auth().currentUser
+      getChildren()
    }
    
    func login(email: String, password: String) {
@@ -31,6 +32,7 @@ class AuthViewModel: ObservableObject {
          guard let user = result?.user else { return }
          self.successfulLogin = true
          self.userSeission = user
+         self.getChildren()
       }
    }
    
@@ -55,6 +57,7 @@ class AuthViewModel: ObservableObject {
          for child in children {
             self.addChild(child: child)
          }
+         self.getChildren()
       }
    }
    
@@ -63,7 +66,7 @@ class AuthViewModel: ObservableObject {
       
       let data = ["name": child.name,
                   "grade": child.grade.rawValue,
-                  "monsterName": child.monster]
+                  "monster": child.monster]
       
       Firestore.firestore().collection("users/\(user.uid)/children")
          .document()
