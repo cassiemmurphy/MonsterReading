@@ -13,20 +13,18 @@ struct NavigationFlowView: View {
    
    var body: some View {
       switch navigationVM.currentPage {
-      case .welcome:
-         WelcomeView()
-      case .login:
-         LoginView()
-      case .addChild:
-         AddChildView()
-      case .home:
-         HomeView()
-      case .flashCards:
-         FlashCardsView()
-      case .studyLists:
-         StudyListsView()
-      case .childSelection:
-         ChildSelectionView()
+         case .welcome:
+            WelcomeView()
+         case .login:
+            LoginView()
+         case .childSelection:
+            ChildSelectionView()
+         case .home:
+            HomeView()
+         case .flashCards:
+            FlashCardsView()
+         case .studyLists:
+            StudyListsView()
       }
    }
 }

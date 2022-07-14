@@ -97,7 +97,7 @@ private struct NavShapes {
 struct MenuTop: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
    @EnvironmentObject var authVM: AuthViewModel
-   
+   @State var showPopover = false
    var previousPage: NavPage = .home
    
    var body: some View {
@@ -118,10 +118,40 @@ struct MenuTop: View {
          Spacer()
          MonsterTitle(fontSize: 30)
          Spacer()
-         Image("FaceLogo")
-            .resizable()
-            .frame(width: 30, height: 30)
-      }.padding()
+         Button {
+            withAnimation {
+               if authVM.userSeission == nil {
+                  showPopover.toggle()
+               }
+            }
+         } label: {
+            Image("FaceLogo")
+               .resizable()
+               .frame(width: 30, height: 30)
+         }
+      }
+      .frame(height: 35)
+      .iconPopover(show: $showPopover) {
+         VStack(alignment: .leading, spacing: 15) {
+            if let child = authVM.childUser {
+               HStack {
+                  Image(child.monster)
+                  Text(child.name)
+               }
+            }
+            Button("Switch Profile") {
+               navigationVM.currentPage = .childSelection
+            }
+            Button("Parent Profile") {
+               print("Parent Profile")
+            }
+            Button("Sign Out") {
+               authVM.signOut()
+               // TODO: test if this is needed or automatic
+               navigationVM.currentPage = .welcome
+            }
+         }
+       }
    }
 }
 
@@ -129,13 +159,16 @@ struct MenuTop: View {
 struct HelperViews_Previews: PreviewProvider {
     static var previews: some View {
        VStack {
+          MenuTop()
+             .environmentObject(NavigationViewModel())
+             .environmentObject(AuthViewModel())
           MonsterTitle(fontSize: 50)
           WelcomeNavigation(isEnabled: .constant(true),
                             pageNumber: 1,
                             accentColor: Color("MonsterBase"),
                             action: {})
              .environmentObject(NavigationViewModel())
-       }
+       }.background(Color("MonsterPurple"))
     }
 }
 

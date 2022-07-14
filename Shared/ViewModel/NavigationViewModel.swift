@@ -11,11 +11,10 @@ import SwiftUI
 enum NavPage {
    case welcome
    case login
-   case addChild
+   case childSelection
    case home
    case flashCards
    case studyLists
-   case childSelection
 }
 
 class NavigationViewModel: ObservableObject {

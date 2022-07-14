@@ -19,6 +19,7 @@ class AuthViewModel: ObservableObject {
    
    init() {
       self.userSeission = Auth.auth().currentUser
+      getChildren()
    }
    
    func login(email: String, password: String) {
@@ -31,10 +32,11 @@ class AuthViewModel: ObservableObject {
          guard let user = result?.user else { return }
          self.successfulLogin = true
          self.userSeission = user
+         self.getChildren()
       }
    }
    
-   func register(name: String, email: String, password: String) {
+   func register(name: String, email: String, password: String, children: [Child]) {
       Auth.auth().createUser(withEmail: email, password: password) { result, error in
          if let error = error {
             print("Failed to register with error \(error.localizedDescription)")
@@ -49,17 +51,22 @@ class AuthViewModel: ObservableObject {
          Firestore.firestore().collection("users")
             .document(user.uid)
             .setData(data) { _ in
-               print("User created..")
+               print("User created")
             }
+         
+         for child in children {
+            self.addChild(child: child)
+         }
+         self.getChildren()
       }
    }
    
-   func addChild(name: String, grade: String, monster: String) {
+   func addChild(child: Child) {
       guard let user = userSeission else { return }
       
-      let data = ["name": name,
-                  "grade": grade,
-                  "monsterName": monster]
+      let data = ["name": child.name,
+                  "grade": child.grade.rawValue,
+                  "monster": child.monster]
       
       Firestore.firestore().collection("users/\(user.uid)/children")
          .document()
@@ -88,4 +95,8 @@ class AuthViewModel: ObservableObject {
       userSeission = nil
       try? Auth.auth().signOut()
    }
+}
+
+enum Grade: String, Codable, CaseIterable {
+   case preschool, kindergarten, first
 }

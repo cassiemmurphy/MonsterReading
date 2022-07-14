@@ -109,5 +109,6 @@ struct StudyListsView_Previews: PreviewProvider {
     static var previews: some View {
        StudyListsView()
           .environmentObject(NavigationViewModel())
+          .environmentObject(AuthViewModel())
     }
 }
