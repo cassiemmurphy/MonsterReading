@@ -15,28 +15,32 @@ struct IconPopover: View {
     TODO: Style and size
     Set up parent profile
     */
-   
     var body: some View {
        VStack(alignment: .leading, spacing: 15) {
-          HStack {
-             if let child = authVM.childUser {
+          if let child = authVM.childUser {
+             HStack {
                 Image(child.monster)
-                Text(child.name)
+                   .resizable()
+                   .scaledToFit()
+                   .frame(height: 25)
+                   .clipShape(RoundedRectangle(cornerRadius: 5))
+                Text(child.name).font(Font.custom("Helvetica Neue", size: 20))
+                   .foregroundColor(Color("MonsterBase"))
+                   .fontWeight(.semibold)
              }
           }
           Button("Switch Profile") {
              navVM.currentPage = .childSelection
-          }
+          }.foregroundColor(.black)
           Button("Parent Profile") {
              print("Parent Profile")
-          }
+          }.foregroundColor(.black)
           Button("Sign Out") {
              authVM.signOut()
              // TODO: test if this is needed or automatic
              navVM.currentPage = .welcome
-          }
-       }.background(Color.white)
-       .cornerRadius(15)
+          }.foregroundColor(.black)
+       }
     }
 }
 
@@ -57,11 +61,12 @@ extension View {
                if show.wrappedValue {
                   content()
                      .padding()
-                     .background( Color.white.cornerRadius(15))
-//                     .offset(y: 50)
+                     .background( Color.white.cornerRadius(10))
+                     .shadow(color: Color.primary.opacity(0.05), radius: 5, x: 5, y: 5)
+                     .offset(x: -20, y: 65)
                }
             },
-            alignment: .bottomTrailing
+            alignment: .topTrailing
          )
    }
 }

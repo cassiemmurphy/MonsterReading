@@ -97,7 +97,7 @@ private struct NavShapes {
 struct MenuTop: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
    @EnvironmentObject var authVM: AuthViewModel
-   @State var showPopover = false
+   @Binding var showPopover: Bool
    var previousPage: NavPage = .home
    
    var body: some View {
@@ -120,38 +120,17 @@ struct MenuTop: View {
          Spacer()
          Button {
             withAnimation {
-               if authVM.userSeission == nil {
+               if authVM.userSeission != nil {
                   showPopover.toggle()
                }
             }
          } label: {
-            Image("FaceLogo")
+            Image(authVM.childUser?.monster ?? "FaceLogo")
                .resizable()
                .frame(width: 30, height: 30)
+               .cornerRadius(5)
          }
-      }
-      .frame(height: 35)
-      .iconPopover(show: $showPopover) {
-         VStack(alignment: .leading, spacing: 15) {
-            if let child = authVM.childUser {
-               HStack {
-                  Image(child.monster)
-                  Text(child.name)
-               }
-            }
-            Button("Switch Profile") {
-               navigationVM.currentPage = .childSelection
-            }
-            Button("Parent Profile") {
-               print("Parent Profile")
-            }
-            Button("Sign Out") {
-               authVM.signOut()
-               // TODO: test if this is needed or automatic
-               navigationVM.currentPage = .welcome
-            }
-         }
-       }
+      }.padding()
    }
 }
 
@@ -159,7 +138,7 @@ struct MenuTop: View {
 struct HelperViews_Previews: PreviewProvider {
     static var previews: some View {
        VStack {
-          MenuTop()
+          MenuTop(showPopover: .constant(true))
              .environmentObject(NavigationViewModel())
              .environmentObject(AuthViewModel())
           MonsterTitle(fontSize: 50)
