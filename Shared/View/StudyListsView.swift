@@ -12,11 +12,12 @@ struct StudyListsView: View {
    @ObservedObject var model = StudyListViewModel()
    
    @State var showLists = false
+   @State var showPopover = false
    private var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible())]
    
     var body: some View {
        VStack {
-          MenuTop()
+          MenuTop(showPopover: $showPopover)
           Text("Study Lists")
              .font(Font.custom("Helvetica Neue", size: 48))
              .fontWeight(.semibold)

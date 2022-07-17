@@ -9,15 +9,15 @@ import SwiftUI
 
 struct FlashCardsView: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
-   @EnvironmentObject var appState: AppState
+   @EnvironmentObject var authVM: AuthViewModel
    
    @StateObject private var flashcardVM = FlashcardViewModel()
-   @State private var cards = [WordViewModel](repeating: FlashcardViewModel.sampleWord, count: 10)
+   @State var showPopover = false
    
     var body: some View {
        GeometryReader { geometry in
           VStack {
-             MenuTop()
+             MenuTop(showPopover: $showPopover)
                 .padding(.top)
              Image("LimeMelt")
                 .resizable()
@@ -32,7 +32,10 @@ struct FlashCardsView: View {
                 flashcardVM.getStudyWords()
              })
           }.background(Color("MonsterLime"))
-             .ignoresSafeArea()
+          .ignoresSafeArea()
+          .iconPopover(show: $showPopover) {
+             IconPopover()
+          }
        }
     }
 }
@@ -43,6 +46,6 @@ struct FlashCardView_Previews: PreviewProvider {
     static var previews: some View {
        FlashCardsView()
           .environmentObject(NavigationViewModel())
-          .environmentObject(AppState(loggedIn: true))
+          .environmentObject(AuthViewModel())
     }
 }

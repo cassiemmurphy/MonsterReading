@@ -22,6 +22,11 @@ struct SignInView: View {
    var accentColor: Color
    var maxDigits: Int = 6
 
+   /*
+    FIXME: Bug on first sign in attempt with correct credentials
+    */
+   
+   
    var body: some View {
        // FIXME: To link back to CD or other user management
       VStack(alignment: .leading) {

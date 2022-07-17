@@ -21,7 +21,7 @@ struct LoginView: View {
        GeometryReader { geometry in
           ZStack {
              VStack(alignment: .leading) {
-                MenuTop(previousPage: .welcome)
+                MenuTop(showPopover: .constant(false), previousPage: .welcome)
                 HStack {
                    Button(action: {
                       isSignIn = true
