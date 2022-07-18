@@ -62,16 +62,19 @@ struct StudyListsView: View {
              }
           } else {
              VStack {
-                GradeButton(grade: "Preschool", getList: { getStudyList(grade: "preschool") })
-                GradeButton(grade: "Kindergarten", getList: { getStudyList(grade: "kindergarten") })
-                GradeButton(grade: "First Grade", getList: { getStudyList(grade: "firstGrade") })
+                ForEach(Grade.allCases, id: \.rawValue) { grade in
+                   GradeButton(grade: grade, getList: { getStudyList(grade: grade) })
+                }
              }.padding()
           }
           Spacer()
        }.background(Color("MonsterOrange"))
+       .iconPopover(show: $showPopover) {
+          IconPopover()
+       }
     }
    
-   func getStudyList(grade: String) {
+   func getStudyList(grade: Grade) {
       model.getStudyLists()
       showLists = true
    }
@@ -79,7 +82,7 @@ struct StudyListsView: View {
 }
 
 struct GradeButton: View {
-   var grade: String
+   var grade: Grade
    var getList: () -> Void
    @State var isHovering = false
    
@@ -89,7 +92,8 @@ struct GradeButton: View {
       } label: {
          HStack {
             Spacer()
-            Text(grade).font(Font.custom("Helvetica Neue", size: 24))
+            // TODO: Do we want to change to First Grade or leave as is?
+            Text(grade.rawValue.capitalized).font(Font.custom("Helvetica Neue", size: 24))
                .foregroundColor(Color("MonsterBase"))
             Spacer()
          }.padding()
