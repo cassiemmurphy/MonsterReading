@@ -11,8 +11,7 @@ import FirebaseFirestoreSwift
 struct StudyList: Identifiable, Codable {
    @DocumentID var id: String?
    var title: String
-   // TODO: Change grade to an Enum??
-   var grade: String
+   var grade: Grade
    var words: [VocabWord]
 }
 

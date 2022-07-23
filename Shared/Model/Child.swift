@@ -15,3 +15,7 @@ struct Child: Identifiable, Codable {
    var monster: String
 
 }
+
+enum Grade: String, Codable, CaseIterable {
+   case preschool, kindergarten, first
+}

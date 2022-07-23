@@ -96,7 +96,3 @@ class AuthViewModel: ObservableObject {
       try? Auth.auth().signOut()
    }
 }
-
-enum Grade: String, Codable, CaseIterable {
-   case preschool, kindergarten, first
-}

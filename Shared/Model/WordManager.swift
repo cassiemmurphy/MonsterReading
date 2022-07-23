@@ -64,4 +64,9 @@ struct WordManager: Decodable, Hashable {
          
       }
    }
+   
+   init(word: String, definition: String) {
+      self.word = word
+      self.definition = definition
+   }
 }
