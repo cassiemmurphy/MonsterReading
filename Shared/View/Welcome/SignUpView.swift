@@ -80,7 +80,13 @@ struct SignUpView: View {
             authVM.register(name: loginVM.name,
                             email: loginVM.email,
                             password: loginVM.pin,
-                            children: children)})
+                            children: children)
+            if authVM.successfulLogin {
+               // TODO: Show on screen successfully signed up
+               navigationVM.currentPage = .childSelection
+            }
+            
+         })
       }.padding()
    }
 }
