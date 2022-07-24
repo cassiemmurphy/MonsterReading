@@ -13,7 +13,9 @@ struct Child: Identifiable, Codable {
    var name: String
    var grade: Grade
    var monster: String
-
+   var studyLists: [StudyList]
+   var level: Int
+   var points: Int
 }
 
 enum Grade: String, Codable, CaseIterable {

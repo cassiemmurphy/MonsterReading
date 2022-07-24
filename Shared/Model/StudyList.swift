@@ -19,4 +19,6 @@ struct VocabWord: Identifiable, Codable {
    var id: String
    var definition: String
    var pronunciation, image: String?
+   var points: Int
+   var learned = false
 }
