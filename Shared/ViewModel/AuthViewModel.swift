@@ -59,14 +59,21 @@ class AuthViewModel: ObservableObject {
          }
          self.getChildren()
       }
+      
+      return message
    }
    
-   func addChild(child: Child) {
+   private func addChild(child: Child) {
       guard let user = userSeission else { return }
       
-      let data = ["name": child.name,
-                  "grade": child.grade.rawValue,
-                  "monster": child.monster]
+      let data: [String: Any] = ["name": child.name,
+                                 "grade": child.grade.rawValue,
+                                 "monster": child.monster,
+                                 "studyLists": child.studyLists,
+                                 "level": child.level,
+                                 "points": child.points]
+      
+       
       
       Firestore.firestore().collection("users/\(user.uid)/children")
          .document()
@@ -76,7 +83,7 @@ class AuthViewModel: ObservableObject {
       
    }
    
-   func getChildren() {
+   private func getChildren() {
       guard let user = userSeission else { return }
       db.collection("users/\(user.uid)/children").getDocuments { snapshot, error in
          // TODO: handle error instead of just escaping

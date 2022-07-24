@@ -24,9 +24,9 @@ class StudyListViewModel: ObservableObject {
    
    let db = Firestore.firestore()
    
-   func getStudyLists() {
-      db.collection("studylists").getDocuments { snapshot, error in
-         // TODO: handle error instead of just escaping
+   func getStudyLists(grade: Grade) {
+      
+      db.collection("studylists").whereField("grade", isEqualTo: grade.rawValue).getDocuments { snapshot, error in
          guard let snapshot = snapshot, error == nil  else { return }
 
          DispatchQueue.main.async {

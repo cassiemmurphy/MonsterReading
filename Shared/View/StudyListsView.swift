@@ -9,10 +9,17 @@ import SwiftUI
 
 struct StudyListsView: View {
    @EnvironmentObject var navigationVM: NavigationViewModel
+   @EnvironmentObject var auth: AuthViewModel
    @ObservedObject var model = StudyListViewModel()
+   
+   
+   /*
+    TODO: add check mark next to study list already added and remove add button
+    */
    
    @State var showLists = false
    @State var showPopover = false
+   @State var gradeTitle = ""
    private var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible())]
    
     var body: some View {
@@ -31,12 +38,18 @@ struct StudyListsView: View {
                    }, label: {
                       Image(systemName: "chevron.left").foregroundColor(.white)
                    })
+                   Text(gradeTitle)
+                      .font(Font.custom("Helvetica Neue", size: 48))
+                      .fontWeight(.semibold)
+                      .foregroundColor(Color("MonsterSky"))
+                      .glowBorder(color: .black, lineWidth: 2)
                    Spacer()
                 }.padding()
                 ScrollView {
                    LazyVGrid(columns: gridItemLayout) {
                       ForEach(model.lists) { list in
                          Button {
+                            model.selectedList = list
                             withAnimation {
                                model.present()
                             }
@@ -53,15 +66,19 @@ struct StudyListsView: View {
              }
              .overlay {
                 if model.popupState.isPresented {
-                   StudyListPopupView {
-                      withAnimation {
-                         model.dismiss()
+                   if let selectedList = model.selectedList {
+                      StudyListPopupView(title: selectedList.title, words: selectedList.words) {
+                         withAnimation {
+                            model.dismiss()
+                         }
+                      } addList: {
+                         auth.childUser?.studyLists.append(selectedList)
                       }
                    }
                 }
              }
           } else {
-             VStack {
+             VStack(spacing: 30) {
                 ForEach(Grade.allCases, id: \.rawValue) { grade in
                    GradeButton(grade: grade, getList: { getStudyList(grade: grade) })
                 }
@@ -75,7 +92,9 @@ struct StudyListsView: View {
     }
    
    func getStudyList(grade: Grade) {
-      model.getStudyLists()
+//      model.createLists()
+      model.getStudyLists(grade: grade)
+      gradeTitle = grade.rawValue
       showLists = true
    }
 
@@ -104,7 +123,6 @@ struct GradeButton: View {
      .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
      .shadow(color: .gray, radius: 2, x: 0, y: 1)
      .onHover { hovering in
-        print(hovering)
         isHovering = hovering
      }
    }

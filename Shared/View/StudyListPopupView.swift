@@ -50,11 +50,17 @@ struct StudyListPopupView: View {
 
 struct StudyListPopupView_Previews: PreviewProvider {
     static var previews: some View {
-       StudyListPopupView(title: "Study List Group 1",
-                          words: [VocabWord(id: "yes", definition: ""),
-                                  VocabWord(id: "no", definition: ""),
-                                  VocabWord(id: "me", definition: ""),
-                                  VocabWord(id: "you", definition: "")]) {}       addList: {}
+      let words = [VocabWord(id: "yes", definition: "", points: 5, learned: false),
+                   VocabWord(id: "no", definition: "", points: 5, learned: false),
+                   VocabWord(id: "me", definition: "", points: 5, learned: false),
+                   VocabWord(id: "you", definition: "", points: 5, learned: false),
+                   VocabWord(id: "I", definition: "", points: 5, learned: false)]
+       StudyListPopupView(title: "Study List Group 1", words: words) {
+          print("dismiss")
+       } addList: {
+          print("add list")
+       }
+
     }
 }
 
