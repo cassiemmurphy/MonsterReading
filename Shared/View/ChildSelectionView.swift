@@ -54,6 +54,7 @@ struct ChildSelectionView: View {
                 .background(.white)
              Button {
                 authVM.signOut()
+                navigationVM.currentPage = .welcome
              } label: {
                 Text("Sign Out")
              }

@@ -10,19 +10,11 @@ import CoreData
 
 class FlashcardViewModel: ObservableObject {
    
-   @Published var words = [WordViewModel]()
+   @Published var words = [VocabWord]()
    
-   func addStudyList(studyList: [String]) {
-      let dictionaryConnect = DictionaryConnection()
-      for word in studyList {
-         dictionaryConnect.fetchVocabData(word: word)
-      }
-   }
-   
-   func getStudyWords() {
-      let words = CoreDataManager.shared.getAllWords()
-      DispatchQueue.main.async {
-         self.words = words.map(WordViewModel.init)
+   func getFlashcardWords(child: Child) {
+      for list in child.studyLists {
+         words.append(contentsOf: list.words)
       }
    }
    

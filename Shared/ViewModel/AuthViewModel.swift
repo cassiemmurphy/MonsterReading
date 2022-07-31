@@ -60,7 +60,7 @@ class AuthViewModel: ObservableObject {
          self.getChildren()
       }
       
-      return message
+//      return message
    }
    
    private func addChild(child: Child) {

@@ -38,8 +38,9 @@ struct StudyListsView: View {
                    }, label: {
                       Image(systemName: "chevron.left").foregroundColor(.white)
                    })
+                   Spacer()
                    Text(gradeTitle)
-                      .font(Font.custom("Helvetica Neue", size: 48))
+                      .font(Font.custom("Helvetica Neue", size: 38))
                       .fontWeight(.semibold)
                       .foregroundColor(Color("MonsterSky"))
                       .glowBorder(color: .black, lineWidth: 2)
@@ -54,8 +55,11 @@ struct StudyListsView: View {
                                model.present()
                             }
                          } label: {
-                            Text(list.title).font(Font.custom("Helvetica Neue", size: 24))
+                            VStack {
+                               Text(list.category.rawValue).font(Font.custom("Helvetica Neue", size: 24))
                                .foregroundColor(.black)
+                               Text(list.title).font(Font.custom("Helvetica Neue", size: 24))
+                               .foregroundColor(.black)}
                          }
                          .padding()
                          .background(.white)
@@ -73,6 +77,8 @@ struct StudyListsView: View {
                          }
                       } addList: {
                          auth.childUser?.studyLists.append(selectedList)
+                         guard let child = auth.childUser, let user = auth.userSeission else { return }
+                         model.addListToChild(user: user, child: child, list: selectedList)
                       }
                    }
                 }
@@ -92,7 +98,7 @@ struct StudyListsView: View {
     }
    
    func getStudyList(grade: Grade) {
-//      model.createLists()
+ //     model.createLists()
       model.getStudyLists(grade: grade)
       gradeTitle = grade.rawValue
       showLists = true
