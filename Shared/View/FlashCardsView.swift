@@ -26,10 +26,19 @@ struct FlashCardsView: View {
              ZStack {
                 // FIXME: offset adjustments need checking
                 ForEach(flashcardVM.words, id: \.id) { word in
-                   CardView(word: word, cardHeight: geometry.size.height * 0.4)
+                   CardView(word: word, cardHeight: geometry.size.height * 0.4, removal: {
+                      if let index = flashcardVM.words.firstIndex(of: word) {
+                         flashcardVM.words.remove(at: index)
+                      }
+                   }, moveCard: {
+                      if let index = flashcardVM.words.firstIndex(of: word) {
+                         flashcardVM.words.remove(at: index)
+                         flashcardVM.words.insert(word, at: 0)
+                      }
+                   })
                 }
              }.onAppear(perform: {
-                flashcardVM.getStudyWords()
+                flashcardVM.getFlashcardWords(child: authVM.childUser)
              })
           }.background(Color("MonsterLime"))
           .ignoresSafeArea()

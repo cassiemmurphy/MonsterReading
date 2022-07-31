@@ -7,9 +7,12 @@
 import SwiftUI
 
 struct CardView: View {
-   var word: WordViewModel
-   
+   var word: VocabWord
    @State var cardHeight: CGFloat
+   var removal: (() -> Void)? = nil
+   var moveCard: (() -> Void)? = nil
+   
+   @State private var correctCount = 0
    @State private var showDefinition = false
    @State private var offset = CGSize.zero
    @StateObject private var soundManager = SoundManager()
@@ -18,12 +21,12 @@ struct CardView: View {
     var body: some View {
        ZStack {
           VStack {
-             Text(word.word.uppercased())
+             Text("word.word.uppercased()")
                 .font(.system(size: 90))
                 .fontWeight(.heavy)
                 .foregroundColor(.black)
              if showDefinition {
-                Text(word.definition)
+                Text("word.definition")
                    .font(.title)
                    .foregroundColor(.gray)
              }
@@ -35,7 +38,7 @@ struct CardView: View {
                    .frame(width: 100, height: 100)
                 Spacer()
                 Button(action: {
-                   soundManager.playSound(sound: word.pronunciation, word: word.word)
+//                   soundManager.playSound(sound: word.pronunciation, word: word.word)
                 }, label: {
                    Image("PlaySound")
                       .resizable()
@@ -60,7 +63,18 @@ struct CardView: View {
             }
             .onEnded { _ in
                if abs(offset.width) > 100 {
-                  // FIXME: Move card to the back of the list instead of remove it.
+                  if offset.width > 0 {
+                     if correctCount == 3 {
+                        print("Learned Word")
+                        removal?()
+                     } else {
+                        correctCount += 1
+                        moveCard?()
+                     }
+                  } else {
+                     correctCount = 0
+                     moveCard?()
+                  }
                }
                else {
                   offset = .zero
@@ -77,6 +91,7 @@ struct CardView: View {
 
 struct CardView_Preview: PreviewProvider {
    static var previews: some View {
-      CardView(word: FlashcardViewModel.sampleWord, cardHeight: 300)
+      CardView(word: VocabWord(id: "hello", points: 5),
+               cardHeight: 300)
     }
 }

@@ -8,8 +8,8 @@ import Foundation
 import SwiftUI
 
 struct WordManager: Decodable, Hashable {
-   let word, definition: String
-   var pronunciation, phoneticSpelling: String?
+   let word: String
+   var pronunciation: String?
    
    private enum CodingKeys: String, CodingKey {
       case word, results
@@ -21,13 +21,9 @@ struct WordManager: Decodable, Hashable {
             case entries, phrases
             
             enum Entries: String, CodingKey {
-               case senses, pronunciations
-               
-               enum Senses: String, CodingKey {
-                  case definitions
-               }
+               case pronunciations
                enum Pronunciation: String, CodingKey {
-                  case phoneticSpelling, pronunciation = "audioFile"
+                  case pronunciation = "audioFile"
                }
             }
          }
@@ -47,26 +43,14 @@ struct WordManager: Decodable, Hashable {
       var entryContainer = try firstLexicalEntryContainer.nestedUnkeyedContainer(forKey: .entries)
       let firstEntryContainer = try entryContainer.nestedContainer(keyedBy: CodingKeys.Results.LexicalEntries.Entries.self)
       
-      var senseContainer = try firstEntryContainer.nestedUnkeyedContainer(forKey: .senses)
-      let firstSenseContainer = try senseContainer.nestedContainer(keyedBy: CodingKeys.Results.LexicalEntries.Entries.Senses.self)
-      let definitions = try firstSenseContainer.decode([String].self, forKey: .definitions)
-      definition = definitions.first ?? "No valid definition"
-      
-      
       var pronunciationContainer = try firstEntryContainer.nestedUnkeyedContainer(forKey: .pronunciations)
       while !pronunciationContainer.isAtEnd {
          let nestedPronunciationContainer = try pronunciationContainer.nestedContainer(keyedBy: CodingKeys.Results.LexicalEntries.Entries.Pronunciation.self)
          if let pronunciation = try? nestedPronunciationContainer.decode(String.self, forKey: .pronunciation) {
             self.pronunciation = pronunciation
-            phoneticSpelling = try nestedPronunciationContainer.decode(String.self, forKey: .phoneticSpelling)
             break
          }
          
       }
-   }
-   
-   init(word: String, definition: String) {
-      self.word = word
-      self.definition = definition
    }
 }
